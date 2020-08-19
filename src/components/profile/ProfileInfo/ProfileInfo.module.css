@@ -1,0 +1,48 @@
+.block{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.itemImg {
+    width: 300px;
+    margin: 20px;
+
+    text-align: center;
+}
+.itemImg img{
+    width: 100%;
+}
+.itemInfo{
+    width: 300px;
+    margin: 20px;
+
+}
+.itemInfo p{
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+.itemInfo span{
+    display: block;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.socialIcons b{
+    font-size: 12px;
+
+
+}
+.socialIcons  img{
+    width: 25px;
+    vertical-align: middle;
+
+}
+.socialIcons {
+    display: inline-block;
+    margin-top: 20px;
+}
+.socialIcons div{
+    margin-bottom: 5px;
+}

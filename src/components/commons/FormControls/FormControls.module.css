@@ -1,0 +1,26 @@
+.textareaAddMess{
+    width: 100%;
+}
+
+.error input,
+.error textarea {
+    border: 1px solid #FF0000;
+    background-image: url("../../../img/social_icons/1.png");
+    background-repeat: no-repeat;
+    background-position: right;
+
+
+}
+.spanError{
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FF0000;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #FF0000;
+    width: 25%;
+}
+.input{
+
+}

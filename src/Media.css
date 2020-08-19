@@ -1,0 +1,13 @@
+@media screen and  (max-width : 600px) {
+.profile_head{
+    display: none;
+}
+    .profile_block{
+        grid-template-columns: repeat(3, 80px); /* 3 столбца */
+    font-size: 14px;
+    }
+    .profile_block img {
+        width: 50%;
+    }
+
+}

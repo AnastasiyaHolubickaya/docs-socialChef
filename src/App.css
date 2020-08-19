@@ -1,0 +1,18 @@
+html, body{
+  width: 100%;
+  background: transparent url("img/body.jpg") repeat;
+}
+.App {
+  width: 100%;
+  color: #444;
+  margin: 0 auto;
+  font-family: " Raleway-Light", sans-serif ;
+
+
+}
+.content {
+  width: 100%;
+  height: auto;
+
+}
+

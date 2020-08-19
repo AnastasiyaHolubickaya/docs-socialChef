@@ -1,0 +1,27 @@
+.dialog{
+    width: 100%;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 22px;
+    float: left;
+}
+
+.active{
+    color: gold;
+}
+.dialog img{
+    width: 100px;
+    float: left;
+    margin-right: 10px;
+}
+.dialog a{
+    font-weight: 700;
+    color: #F4716A !important;
+    transition: all 0.2s ease-in;
+    outline: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 10px;
+}

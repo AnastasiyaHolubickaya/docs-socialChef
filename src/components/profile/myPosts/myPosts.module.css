@@ -1,0 +1,45 @@
+.block {
+    padding-left: 28px;
+    width: 65%;
+}
+.input_text{
+    width: 75%;
+    min-height: 50px;
+    color: gainsboro;
+    border: 1px solid #9160CF;
+    padding-left: 10px;
+
+}
+.input_text::-moz-placeholder{
+    color: gainsboro;
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+.input_text:-moz-placeholder{
+    color: gainsboro;
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+.input_text::-webkit-input-placeholder{
+    color: gainsboro;
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+.input_text:focus::-moz-placeholder{
+    opacity: 0;
+}
+.input_text:focus:-moz-placeholder{
+    opacity: 0;
+}
+.input_text:focus::-webkit-input-placeholder{
+    opacity: 0;
+}
+.input_text:focus{
+    outline: none;
+}
+
+.reset_properties{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
