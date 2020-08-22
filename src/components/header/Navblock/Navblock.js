@@ -22,7 +22,7 @@ const Navblock = (props) =>{
 
             </div>
             <div className={classes.item3}>
-               <span><NavLink to={`/profile/`+ props.userId}> Мой профиль </NavLink></span>
+               <span><NavLink to={`/profile`}> Мой профиль </NavLink></span>
 
             </div>
         </div>

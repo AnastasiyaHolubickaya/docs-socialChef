@@ -6,6 +6,7 @@ const ADD_POST = 'ADD-POST';
 const  SET_USERS_PROFILE = 'SET_USERS_PROFILE';
 const  SET_STATUS = 'SET_STATUS';//2
 const DELETE_POST = 'DELETE_POST';
+const SET_PHOTO = 'SET_PHOTO';
 
 let initialState = {
     dataMyPosts:[
@@ -14,7 +15,8 @@ let initialState = {
         {img:face, mess:"dsfs", like:1}
     ],
     profile: null,
-    status:""//1
+    status:"",//1
+
 };
 
    const profileReducer =  (state = initialState, action) => {
@@ -33,6 +35,11 @@ let initialState = {
            { return {...state, status: action.status};}
            case DELETE_POST:
            { return {...state, dataMyPosts: state.dataMyPosts.filter(p=> p.like !== action.id)};}
+           case SET_PHOTO:
+           {
+               return {...state, profile: {...state.profile, photos: action.photos}};
+           }
+
            default:
                return state;
        }
@@ -43,6 +50,8 @@ export const addPostActionCreator =(post)=> ({type: ADD_POST, post });// есл�
 export const setUsersProfile = (profile) => ({type: SET_USERS_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});//4
 export const deletePost = (id) => ({type: DELETE_POST,id});
+export const setPhoto = (photos) => ({type: SET_PHOTO, photos});
+
 // thunk
 export  const  getProfileThunkCreator = (userId) => (dispatch) => {
     profileApi.getProfile(userId).then(response => {
@@ -62,7 +71,12 @@ export  const  updateStatusThunkCreator = (status) => (dispatch) => {
         dispatch(setStatus(status));
     })
 };
-
+export  const  updateProfilePhotoThunkCreator = (file) => (dispatch) => {
+    profileApi.addPhoto(file).then(response => {
+        if(response.data.resultCode === 0)
+            dispatch(setPhoto(response.data.data.photos));
+    })
+};
 
 
    export default profileReducer;

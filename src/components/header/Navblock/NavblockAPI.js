@@ -24,7 +24,7 @@ class NavblockAPI extends  React.Component{
 const mapStateToProps=(state) => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
-    userId: state.auth.userId
+    //userId: state.auth.userId
 });
 export default connect (mapStateToProps, { LogoutThunkCreator})(NavblockAPI);
 

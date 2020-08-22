@@ -57,5 +57,19 @@ export const usersApi = {
          // берем из API документации, которую нам должен предоставить backend разработчик
          return instance.put(`profile/status/`,{status: status});
 
+     },
+     addPhoto (file){
+         //отправляем на сервер объект у которого есть свойство status: (эти данные
+         // берем из API документации, которую нам должен предоставить backend разработчик
+        let formData = new FormData();
+        formData.append("image",file);
+         return instance.put(`profile/photo/`,formData,{
+             headers:{
+                 "Content-Type": "multipart/form-data"
+             }
+         });
+
      }
+
+
  };

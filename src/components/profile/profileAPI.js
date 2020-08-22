@@ -2,7 +2,12 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator} from "../../redux/profileReducer";
+import {
+    getProfileThunkCreator,
+    getStatusThunkCreator,
+    updateProfilePhotoThunkCreator,
+    updateStatusThunkCreator
+} from "../../redux/profileReducer";
 
 import { WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {withRouter} from "react-router-dom";
@@ -11,7 +16,7 @@ import {compose} from "redux";
 
 class ProfileAPI extends  React.Component{
 
-    componentDidMount(){
+    refresh() {
         //получаем id юзера из url (.../profile/1100)
         let userId = this.props.match.params.userId;// match относится к компоненте withRouter , через него узнаем id кликнутого пользователя match.params.userId
         if (!userId){
@@ -20,8 +25,19 @@ class ProfileAPI extends  React.Component{
                 this.props.history.push('/login');// програмный редирект
             }
         }
-            this.props.getProfileThunkCreator(userId);
-            this.props.getStatusThunkCreator (userId);
+        this.props.getProfileThunkCreator(userId);
+        this.props.getStatusThunkCreator (userId);
+    }
+
+
+    componentDidMount(){
+        this.refresh();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {//используем обязательно с условием, чтоб не зациклить
+        if(this.props.match.params.userId !== prevProps.match.params.userId){
+            this.refresh();
+        }
     }
 
     render() {
@@ -30,6 +46,10 @@ class ProfileAPI extends  React.Component{
                     profile={this.props.profile}
                     status={this.props.status}
                     updateStatus={this.props.updateStatusThunkCreator}
+                    clickUserId = {!this.props.match.params.userId}
+                    savePhoto = {this.props.updateProfilePhotoThunkCreator}
+
+
            />
 
 
@@ -45,8 +65,9 @@ class ProfileAPI extends  React.Component{
 let mapStateToProps = (state)  =>({
     profile:state.profile.profile,
     status: state.profile.status,
-    userId: state.profile.userId,
-    isAuth: state.auth.isAuth
+    userId: state.auth.userId,
+    isAuth: state.auth.isAuth,
+
 
 });
 
@@ -57,7 +78,7 @@ let mapStateToProps = (state)  =>({
 //let Url = withRouter(AuthRedirectComponent);
 //export  default connect(mapStateToProps,{getProfileThunkCreator}) (Url);
 export  default compose(
-    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator}),
+    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator}),
     withRouter,
     WithAuthRedirect
 )(ProfileAPI);
