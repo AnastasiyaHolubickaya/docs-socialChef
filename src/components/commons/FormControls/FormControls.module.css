@@ -21,6 +21,6 @@
     border: 1px solid #FF0000;
     width: 25%;
 }
-.input{
-
+input, textarea{
+width: 100%;
 }

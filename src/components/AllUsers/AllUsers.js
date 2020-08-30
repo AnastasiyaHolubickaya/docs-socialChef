@@ -26,7 +26,7 @@ let Counter = (props) =>{
 
 
 const AllUsers = (props) =>{
-    console.log(props);
+    //console.log(props);
     return(
         <div className={classes.usersPage}>
             <Search/>

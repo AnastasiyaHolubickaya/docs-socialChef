@@ -4,7 +4,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
     getProfileThunkCreator,
-    getStatusThunkCreator,
+    getStatusThunkCreator, saveProfileThunkCreator,
     updateProfilePhotoThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profileReducer";
@@ -48,6 +48,7 @@ class ProfileAPI extends  React.Component{
                     updateStatus={this.props.updateStatusThunkCreator}
                     clickUserId = {!this.props.match.params.userId}
                     savePhoto = {this.props.updateProfilePhotoThunkCreator}
+                    saveProfile = {this.props.saveProfileThunkCreator}
 
 
            />
@@ -78,7 +79,7 @@ let mapStateToProps = (state)  =>({
 //let Url = withRouter(AuthRedirectComponent);
 //export  default connect(mapStateToProps,{getProfileThunkCreator}) (Url);
 export  default compose(
-    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator}),
+    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
     withRouter,
     WithAuthRedirect
 )(ProfileAPI);

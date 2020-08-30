@@ -69,7 +69,11 @@ export const usersApi = {
              }
          });
 
-     }
+     },
+     saveProfile (profile){
+         return instance.put(`profile/`,profile);
+
+     },
 
 
  };

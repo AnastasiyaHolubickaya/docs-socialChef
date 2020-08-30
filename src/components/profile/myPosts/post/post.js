@@ -5,7 +5,7 @@ import classes from "./post.module.css";
 
 const Post = (props) =>{
    let post = [...props.dataMyPosts].reverse().map(p=>
-       <div className={classes.item}>
+       <div key={p.id} className={classes.item}>
            <img src={p.img} alt=""/>
            <span>{p.mess}</span> <br/>
            <button>Like {p.like}</button>

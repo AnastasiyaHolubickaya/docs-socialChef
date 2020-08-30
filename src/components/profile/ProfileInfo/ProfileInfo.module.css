@@ -1,10 +1,11 @@
-.block{
+.flexBlock{
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
 }
 .itemImg {
+    width: 300px;
    max-width: 300px;
     margin: 20px;
     text-align: center;
@@ -13,18 +14,25 @@
     width: 100%;
 }
 .itemInfo{
-    width: 300px;
+    width: 60%;
+    max-width: 600px;
     margin: 20px;
+
 }
 .itemInfo p{
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
 }
-.itemInfo span{
-    display: block;
-    padding: 10px;
-    background-color: #ffffff;
+.spanItem{
+ line-height: 2;
+    font-size: 14px;
+    color: #000000;
+
+}
+.spanItem b{
+    font-size: 16px;
+
 }
 .socialIcons b{
     font-size: 12px;
@@ -36,10 +44,10 @@
     vertical-align: middle;
 }
 .socialIcons {
-    display: inline-block;
+
     margin-top: 20px;
 }
-.socialIcons div{
+socialIcons div{
     margin-bottom: 5px;
 }
 
@@ -59,4 +67,26 @@
 }
 .displayNone{
     display: none;
+}
+.span{
+    display: block;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.profileForm{
+
+    margin: 20px 0;
+    padding: 20px;
+    width: 300px;
+    max-width: 300px;
+
+}
+.spanForm{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bolder;
+}
+.bForm{
+    text-transform: none;
+    font-size: 14px;
 }

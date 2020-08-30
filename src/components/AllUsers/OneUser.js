@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import face from "../../img/icons/user.jpg";
 
 const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCreator, ...props}) =>{
-
+    console.log(users);
 
 
     return(
@@ -25,10 +25,7 @@ const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCrea
                     <span><b>{u.name}</b></span> <br/>
                     <span className={classes.status}>{u.status}</span>
                 </div>
-                <div>
-                    <span>{"u.locations.city"}</span> <br/>
-                    <span>{"u.locations.country"}</span>
-                </div>
+
 
             </div>)}
         </div>

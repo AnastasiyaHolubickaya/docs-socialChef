@@ -1,5 +1,6 @@
 import face from "../img/photo_2020-07-26_23-35-01.jpg";
 import {profileApi} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 
 const ADD_POST = 'ADD-POST';
@@ -8,11 +9,12 @@ const  SET_STATUS = 'SET_STATUS';//2
 const DELETE_POST = 'DELETE_POST';
 const SET_PHOTO = 'SET_PHOTO';
 
+
 let initialState = {
     dataMyPosts:[
-        {img:face, mess:"fgdheyri vjjv ffff", like:15},
-        {img:face, mess:"sdfswerw fdg", like:4},
-        {img:face, mess:"dsfs", like:1}
+        {id: 1, img:face, mess:"fgdheyri vjjv ffff", like:15},
+        {id: 2, img:face, mess:"sdfswerw fdg", like:4},
+        {id: 3, img:face, mess:"dsfs", like:1}
     ],
     profile: null,
     status:"",//1
@@ -39,6 +41,7 @@ let initialState = {
            {
                return {...state, profile: {...state.profile, photos: action.photos}};
            }
+
 
            default:
                return state;
@@ -76,6 +79,18 @@ export  const  updateProfilePhotoThunkCreator = (file) => (dispatch) => {
         if(response.data.resultCode === 0)
             dispatch(setPhoto(response.data.data.photos));
     })
+};
+export  const  saveProfileThunkCreator = (profile) => async (dispatch, getState) => {
+    const  userId = getState().auth.userId;// достаем из стейта текущего пользователя
+   const response = await profileApi.saveProfile(profile);
+        if(response.data.resultCode === 0){
+            dispatch(getProfileThunkCreator(userId));
+        } else {
+            let message = response.data.messages.length >0 ? response.data.messages[0] : " Ошибка";
+            dispatch(stopSubmit("profile",{_error: message}));// stopSubmit() - это action creator из redux form , останавливает отправку формы в скабках указываем какую именно форму останавливаем (name)
+            return  Promise.reject({_error: message})// для остановки отправки формы в случае ошибки
+        }
+
 };
 
 

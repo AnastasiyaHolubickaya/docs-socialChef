@@ -1,0 +1,22 @@
+.profileForm{
+
+    margin: 20px 0;
+    padding: 20px;
+    width: 300px;
+    max-width: 300px;
+
+}
+.spanForm{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bolder;
+}
+.bForm{
+   display: block;
+    margin: 20px 0;
+    font-size: 14px;
+}
+.formSummaryError {
+    border: 1px solid red;
+    color: red;
+}

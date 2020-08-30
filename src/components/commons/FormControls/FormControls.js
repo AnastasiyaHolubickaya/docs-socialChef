@@ -4,7 +4,7 @@ import classes from "./FormControls.module.css"
 const FormControl = ({child, input ,meta ,...props}) =>{
     const showError = meta.touched && meta.error;//meta.touched - сидят данные быь ли тронут инпут, meta.error- сидит вид ошибки
     return (
-        <div className={showError && classes.error}>
+        <div className={showError ? classes.error: undefined}>
             {props.children}<br/>
             { showError && <span className={classes.spanError}>{meta.error}</span>}
         </div>

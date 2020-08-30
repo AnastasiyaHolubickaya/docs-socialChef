@@ -16,6 +16,7 @@ const Profile = (props) =>{
                 updateStatus={props.updateStatus}
                 clickUserId = {props.clickUserId}
                 savePhoto = {props.savePhoto}
+                saveProfile = {props.saveProfile}
 
             />
             <MyPostsContainer />

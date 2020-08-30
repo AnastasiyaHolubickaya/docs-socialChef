@@ -2,7 +2,7 @@
 // hook useState
 
 import React, {useEffect, useState} from "react";
-
+import classes from './ProfileInfo.module.css';
 
 const ProfileStatusHook = (props) => {
 // hook useState возвращает массив из двух элементов (state хранится не в самой функции, а где то в React   )
@@ -19,7 +19,8 @@ const ProfileStatusHook = (props) => {
         setStatus(e.currentTarget.value)
         };
     const activeEditeMode = () =>{
-        setEditMode(true)
+        if(props.clickUserId)
+       { setEditMode(true)}
     };
 
     const deActivateEditMode =() => {
@@ -38,7 +39,7 @@ const ProfileStatusHook = (props) => {
 
             <div className=''>
                 { !editMode &&
-                    <span onDoubleClick={activeEditeMode}>... {props.status || 'no status'}</span>
+                    <span className={classes.span} onDoubleClick={activeEditeMode}>... {props.status || 'no status'}</span>
                 }
                 {  editMode &&
                     <input onChange={onStatusChange} onBlur={deActivateEditMode} autoFocus={true} type='text' value={status}/>
