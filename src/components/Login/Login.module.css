@@ -2,3 +2,48 @@
     border: 1px solid red;
     color: red;
 }
+
+.blockForm{
+    width: 250px;
+    margin:0  auto;
+    text-align: center;
+   align-self: center;
+}
+.blockForm h1{
+font-size: 1.5em;
+}
+.loginForm{
+    width: 100%;
+    margin-top: 20px;
+}
+.loginFormInput{
+    margin: 20px auto;
+    width: 100%;
+}
+.loginFormInput input{
+    width: 100%;
+    padding: 10px;
+    background-color: #FFFFFF;
+    border: 1px solid #D9CAB3;
+    border-radius: 5px;
+}
+
+.loginFormRememberMe input{
+    margin-right:10px;
+}
+.loginFormRememberMe input:checked{
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #FF8E88;
+    border-radius: 2px;
+}
+.loginFormButton{
+    margin: 20px auto;
+    text-align: center;
+}
+.wrapperBlockForm{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}

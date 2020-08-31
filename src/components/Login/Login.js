@@ -8,6 +8,7 @@ import {maxLengthCreator, requiredField} from "../../utils/validation/validator"
 import {connect} from "react-redux";
 import { LoginThunkCreator} from "../../redux/authReducer"
 import {Redirect} from "react-router-dom";
+import Button from "../Button/Button";
 // Field поля формы reduxform
 
 const maxLength30 = maxLengthCreator(30);
@@ -21,19 +22,19 @@ const LoginForm = (props) =>{
 //  сбор всех данных с полей формы (упаковываются в объект),
 // вызов  props.onSubmit(formData)
     return(
-            <form onSubmit={props.handleSubmit}>
-                <div><Field name={'email'} placeholder={'email'}
+            <form className={classes.loginForm} onSubmit={props.handleSubmit}>
+                <div className={classes.loginFormInput}><Field name={'email'} placeholder={'email'}
                             component={Input}
                             validate={[requiredField, maxLength30]}/></div>
-                <div><Field name={'password'} placeholder={'password'} type="password"
+                <div className={classes.loginFormInput}><Field name={'password'} placeholder={'password'} type="password"
                             component={Input}
                             validate={[requiredField, maxLength10]}/></div>
-                <div><Field name={'rememberMe'} type="checkbox"
+                <div className={classes.loginFormRememberMe}><Field name={'rememberMe'} type="checkbox"
                             component={'input'} /> запомнить меня</div>
                {
                  props.error && <div className={classes.formSummaryError}> {props.error}</div>
                }
-                <div> <button>Login</button></div>
+                <div className={classes.loginFormButton}> <Button value = "Войти"/> </div>
             </form>
     )
 };
@@ -49,13 +50,16 @@ const Login = (props) =>{
         props.LoginThunkCreator(formData.email, formData.password, formData.rememberMe )//отправляем взятые из формы данные на сервер
     };
     if(props.isAuth){
-        return  <Redirect to = {`/profile/`+ props.userId}/>
+        return  <Redirect to = {`/profile`}/>
     }
     return(
-        <div className={classes}>
-            <h1>login</h1>
-            <LoginReduxForm onSubmit = {onSubmit}/>
+        <div className={classes.wrapperBlockForm}>
+            <div className={classes.blockForm}>
+                <h1>Вход в аккаунт</h1>
+                <LoginReduxForm onSubmit = {onSubmit}/>
+            </div>
         </div>
+
     )
 };
 const mapStateToProps =  (state) => ({

@@ -15,10 +15,10 @@ const Navblock = (props) =>{
                 {props.isAuth
                     ? <div>
                         <span> Привет, {props.login}</span>
-                         <button onClick={props.LogoutThunkCreator}>Выход</button>
+                         <button onClick={props.LogoutThunkCreator}><NavLink to={`/users`}> Выход</NavLink></button>
 
                       </div>
-                    : <NavLink to='/login'>Login</NavLink>}
+                    : <NavLink to='/login'>Вход</NavLink>}
 
             </div>
             <div className={classes.item3}>
