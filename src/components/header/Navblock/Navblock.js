@@ -9,7 +9,7 @@ const Navblock = (props) =>{
     return(
         <div className={classes.block}>
             <div className={classes.item1}>
-                <span> register</span>
+                <span> </span>
             </div>
             <div className={classes.item2}>
                 {props.isAuth

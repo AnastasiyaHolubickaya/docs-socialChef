@@ -12,9 +12,8 @@ const SET_PHOTO = 'SET_PHOTO';
 
 let initialState = {
     dataMyPosts:[
-        {id: 1, img:face, mess:"fgdheyri vjjv ffff", like:15},
-        {id: 2, img:face, mess:"sdfswerw fdg", like:4},
-        {id: 3, img:face, mess:"dsfs", like:1}
+        {id: 1, img:null, mess:"Данные захардкодены в state, profileReducer ", like:15},
+        {id: 2, img:null, mess:"  Запросы к серверу пока не реализованы", like:4}
     ],
     profile: null,
     status:"",//1

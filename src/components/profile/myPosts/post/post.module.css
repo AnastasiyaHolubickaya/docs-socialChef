@@ -1,9 +1,10 @@
 .item{
-    width: 60%;
+    width: 100%;
     padding-top: 30px;
 }
 .item img{
     width: 50px;
+    margin-right: 20px;
 }
 .item span{
     font-size: 16px;
