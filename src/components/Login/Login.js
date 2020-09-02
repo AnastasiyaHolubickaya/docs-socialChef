@@ -34,6 +34,15 @@ const LoginForm = (props) =>{
                {
                  props.error && <div className={classes.formSummaryError}> {props.error}</div>
                }
+                {
+                    props.captchaUrl &&
+                    <div>
+                        <img src={props.captchaUrl} alt="captcha"/>
+                        <Field name={'captcha'} type="text"
+                               component={Input}
+                               validate={[requiredField, maxLength10]}/>
+                    </div>
+                }
                 <div className={classes.loginFormButton}> <Button value = "Войти"/> </div>
             </form>
     )
@@ -47,7 +56,7 @@ const LoginReduxForm = reduxForm({//контейнерная компонент�
 
 const Login = (props) =>{
     const onSubmit = (formData) => {// сюда придут данные из формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
-        props.LoginThunkCreator(formData.email, formData.password, formData.rememberMe )//отправляем взятые из формы данные на сервер
+        props.LoginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captchaUrl )//отправляем взятые из формы данные на сервер
     };
     if(props.isAuth){
         return  <Redirect to = {`/profile`}/>
@@ -56,7 +65,9 @@ const Login = (props) =>{
         <div className={classes.wrapperBlockForm}>
             <div className={classes.blockForm}>
                 <h1>Вход в аккаунт</h1>
-                <LoginReduxForm onSubmit = {onSubmit}/>
+                <LoginReduxForm onSubmit = {onSubmit}
+                                captchaUrl = {props.captchaUrl}
+                />
             </div>
         </div>
 
@@ -64,6 +75,7 @@ const Login = (props) =>{
 };
 const mapStateToProps =  (state) => ({
     isAuth: state.auth.isAuth,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    captchaUrl: state.auth.captchaUrl
 });
 export  default connect (mapStateToProps, {LoginThunkCreator}) (Login);

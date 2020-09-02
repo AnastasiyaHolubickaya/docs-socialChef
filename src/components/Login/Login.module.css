@@ -1,6 +1,13 @@
 .formSummaryError {
     border: 1px solid red;
     color: red;
+    background-color: #FFFFFF;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 .blockForm{
