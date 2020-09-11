@@ -2,20 +2,43 @@ import React from "react";
 import classes from './header.module.css';
 import logo from "../../img/logoChef.png";
 import Navbar from "./Navbar/Navbar";
-import NavblockAPI from "./Navblock/NavblockAPI";
+import {connect} from "react-redux";
+import {LogoutThunkCreator} from "../../redux/authReducer";
+import Navblock from "./Navblock/Navblock";
+import LoginBlock from "./LoginBlock";
 
-const Header = () =>{
+const Header = ({menuItems, isAuth, login, LogoutThunkCreator}) =>{
     return(
+        <div className={classes.g}>
         <div className={classes.header}>
             <div className={classes.img}>
                 <img src={logo} alt="logotype" />
              </div>
 
             <div className={classes.nav}>
-                    <Navbar/>
-                    <NavblockAPI/>
+                    <Navbar menuItems={menuItems}/>
+                     <Navblock isAuth={isAuth}
+                               login={login}
+                               LogoutThunkCreator={LogoutThunkCreator}
+                     />
             </div>
+
         </div>
+            <div className={classes.loginBlock}>
+                <LoginBlock isAuth={isAuth}
+                          login={login}
+                          LogoutThunkCreator={LogoutThunkCreator}
+                />
+            </div>
+</div>
     );
 };
-export default Header;
+
+let mapStateToProps = (state)  =>({
+    menuItems: state.headerMenu.menuItems,
+    isAuth: state.auth.isAuth,
+    login: state.auth.login
+});
+
+
+export default connect (mapStateToProps, { LogoutThunkCreator}) (Header);

@@ -8,8 +8,6 @@ import {
     updateProfilePhotoThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profileReducer";
-
-import { WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 
@@ -29,7 +27,7 @@ class ProfileAPI extends  React.Component{
         this.props.getStatusThunkCreator (userId);
     }
 
-
+// в componentDidMount() можно делать side effects (ajax запросы, setTimeOut, обращение к дом элементам напрямую)
     componentDidMount(){
         this.refresh();
     }
@@ -68,9 +66,12 @@ let mapStateToProps = (state)  =>({
     status: state.profile.status,
     userId: state.auth.userId,
     isAuth: state.auth.isAuth,
-
-
 });
+
+export  default compose(
+    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
+    withRouter
+)(ProfileAPI);
 
 
 //let AuthRedirectComponent = WithAuthRedirect(ProfileAPI);
@@ -78,11 +79,9 @@ let mapStateToProps = (state)  =>({
 // оборачиваем нашу ProfileAPI в компоненту withRouter для того, чтоб получить  url - /2314(...profile/2314 )
 //let Url = withRouter(AuthRedirectComponent);
 //export  default connect(mapStateToProps,{getProfileThunkCreator}) (Url);
-export  default compose(
-    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
-    withRouter,
-    WithAuthRedirect
-)(ProfileAPI);
-
-
-
+//connect создает контейнерную компоненту над презентационной,
+// которая подписывается на изменения в store, берет из него данные и
+// передает в mapStateToProps, там данные сравниваются и если изменились
+// компонента переисовывается
+//также запускает mapdispatchtoprops, получает колбеки и передает внутрь
+// презентационной компоненты, которую отрисовывает

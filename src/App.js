@@ -12,7 +12,7 @@ import Recipes from "./components/Recipes/Recipes";
 import Universal from "./components/Universal/Universal";
 import Login from "./components/Login/Login";
 
-import {Route, withRouter} from "react-router-dom";
+import {Route,  withRouter} from "react-router-dom";
 import AllUsersAPI from "./components/AllUsers/AllUsersAPI";
 //import MessageApi from "./components/Message/MessageApi";
 import {connect} from "react-redux";
@@ -25,10 +25,16 @@ const MessageApi = React.lazy(() => import('./components/Message/MessageApi'));
 
 class App extends Component {// делаем app классовой компонентой, т к нам нужен жизненный цикл componentDidMount
 
+    catchAllUnhandledErrors=(promiseRejectionEvent) => {// глобальный перехват ошибок, либо локально try catch
+        console.log(promiseRejectionEvent);
+    };
+
     componentDidMount(){
-
         this.props.InitializationThunkCreator();
-
+        window.addEventListener("unhandledrejection",this.catchAllUnhandledErrors );//side effect можем позволить тут - но вызывая событие прослушки*
+    }
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection",this.catchAllUnhandledErrors );//* обязательно снимаем его когда компонента размонтировалась
     }
 
     render() {
@@ -39,26 +45,28 @@ class App extends Component {// делаем app классовой компон
 
             <div className="App">
                 <header><Header/></header>
-                <nav> </nav>
+
                 <div className='content'>
-                    <Route exact path='/'
-                           render={() => <Home/>}/>
 
-                    <Route exact path='/recipes' render={() => <Recipes/>}/>
-                    <Route path='/news' render={() => <News/>}/>
-                    <Route path='/dialogs' render={WithSuspense(MessageApi)}/>
-                    <Route path='/register' render={() => <Register/>}/>
-                    <Route path='/soup' render={() => <Universal/>}/>
-                    <Route path='/meet' render={() => <Universal/>}/>
-                    <Route path='/fish' render={() => <Universal/>}/>
-                    <Route path='/bread' render={() => <Universal/>}/>
-                    <Route path='/cookis' render={() => <Universal/>}/>
-                    <Route path='/profile/:userId?' render={() =>
-                        <ProfileAPI//:userId? - добавляем параметр к пути, чтоб можно было его получить из match.params.userId
 
-                        />}/>
-                    <Route path='/login' render={() => <Login/>}/>
-                    <Route path='/users' render={() => <AllUsersAPI/>}/>
+                        <Route  path='/recipes' render={() => <Recipes/>}/>
+                        <Route path='/news' render={() => <News/>}/>
+                        <Route path='/dialogs' render={WithSuspense(MessageApi)}/>
+                        <Route path='/register' render={() => <Register/>}/>
+                        <Route path='/soup' render={() => <Universal/>}/>
+                        <Route path='/meet' render={() => <Universal/>}/>
+                        <Route path='/fish' render={() => <Universal/>}/>
+                        <Route path='/bread' render={() => <Universal/>}/>
+                        <Route path='/cookis' render={() => <Universal/>}/>
+                        <Route path='/profile/:userId?' render={() =>
+                            <ProfileAPI//:userId? - добавляем параметр к пути, чтоб можно было его получить из match.params.userId
+
+                            />}/>
+                        <Route path='/login' render={() => <Login/>}/>
+                        <Route path='/users' render={() => <AllUsersAPI/>}/>
+
+                         <Route exact path='/' render={() => <Home/>}/>
+
                 </div>
 
                 {/*<Profile/>*/}
@@ -78,9 +86,14 @@ export default compose (
     connect (mapStateToProps, {InitializationThunkCreator})
 )( App);
 
+/*со <Switch/> не работает переход - в адресной строке меняется адрес а перехода на страницу не происхоит
+// <Switch/> нужен для распознавания более уточненных адресов, например
 
+"/login/treyteyte" - если встретится на пути такой адрес (более уточненный), Switch дальше не пойдет
+"/login" поэтому короткие адреса вставляем ниже по иерархии
+*/
 
-
+//<Route path='*' render={() => <div> 404 not found </div>}/>
 
 
 /*dataDialogs = {props.state.dialogs.dataDialogs}

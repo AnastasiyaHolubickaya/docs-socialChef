@@ -1,13 +1,13 @@
 
 import React from "react";
 import classes from "./post.module.css";
-
+import face from "../../../../img/icons/user.jpg";
 
 const Post = (props) =>{
    let post = [...props.dataMyPosts].reverse().map(p=>
        <div key={p.id} className={classes.item}>
-           <img src={p.img} alt=""/>
-           <span>{p.mess}</span> <br/>
+           <img src={p.img||face} alt=""/>
+           <span>блок My Posts - {p.mess}</span> <br/>
            <button>Like {p.like}</button>
 
        </div>

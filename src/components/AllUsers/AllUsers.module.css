@@ -172,3 +172,8 @@
 button:disabled{
     background-color: #E1D6C2;
 }
+@media screen and (max-width: 524px) {
+    .usersPage{
+        padding: 5px;
+    }
+}

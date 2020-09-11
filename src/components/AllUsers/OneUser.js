@@ -2,7 +2,7 @@ import React from "react";
 import classes from './AllUsers.module.css';
 import {NavLink} from "react-router-dom";
 import face from "../../img/icons/user.jpg";
-
+import cn from "classnames";//позволяет перечислять классы через запятую, а также вставлять условие для отображения того или иного класса
 const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCreator, ...props}) =>{
     console.log(users);
 
@@ -11,7 +11,7 @@ const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCrea
 
         <div>
             {users.map(u =>
-            <div key={u.id} className={classes.dialog}>
+            <div key={u.id} className={cn (classes.dialog)}>
                 <div className={classes.blockFoto}>
                     <NavLink to ={'/profile/' + u.id} > <img src={u.photos.small != null ? u.photos.small : face} alt={""}/> </NavLink>  <br/>
                     {u.followed

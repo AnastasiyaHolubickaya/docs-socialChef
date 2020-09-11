@@ -1,0 +1,37 @@
+.block{
+    width: 100%;
+    display: none;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 10px;
+    color: #444444;
+    font-weight: bold;
+
+}
+.items{
+    width: 33%;
+}
+b{
+    color: #F4716A;
+}
+.link{
+   color: #444444;
+    text-decoration: none;
+}
+.link:hover{
+    color: #ffffff;
+}
+
+
+
+@media screen and  (max-width : 520px) {
+    .block{
+      display: flex;
+    }
+
+}
+@media screen and (max-width: 356px) {
+    .block{
+        font-size: 10px;
+    }
+}
