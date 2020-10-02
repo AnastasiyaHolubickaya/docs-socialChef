@@ -17,6 +17,19 @@ export const usersApi = {
             })
 
     },
+    getUsersForName (name)  {
+        return instance.get(`users?term=${name}`)
+            .then(response => {
+                return response.data
+            })
+
+    },
+    getFollowedUsers(friend) {
+        return instance.get(`users?friend=${friend}`)
+            .then(response => {
+                return response.data
+            })
+    },
     unSubscribeUsers(usersId) {
         return instance.delete(`follow/${usersId}`)
             .then(response => {
@@ -77,6 +90,13 @@ export const usersApi = {
          return instance.put(`profile/`,profile);
 
      },
-
-
  };
+
+export const HomeApi  = {
+    getNews (currentPage, pageSize)  {
+        return instance.get(`news?page=${currentPage}&count=${pageSize}`)
+            .then(response => {
+                return response.data
+            })
+    },
+};

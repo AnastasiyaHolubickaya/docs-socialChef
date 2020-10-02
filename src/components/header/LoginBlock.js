@@ -27,7 +27,7 @@ const LoginBlock = ({isAuth, login, LogoutThunkCreator }) =>{
 
             </div>
             <div className={cn (classes.items)}>
-                <span> <b> регистрация</b>  </span>
+                <span> <NavLink className={classes.link} to={`/register`}> регистрация </NavLink>  </span>
             </div>
 
         </div>

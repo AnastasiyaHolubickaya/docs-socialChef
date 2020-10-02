@@ -10,6 +10,7 @@ import {
 } from "../../redux/profileReducer";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
+import {getFollowedUsersThunkCreator} from "../../redux/usersReducer";
 
 
 class ProfileAPI extends  React.Component{
@@ -25,6 +26,7 @@ class ProfileAPI extends  React.Component{
         }
         this.props.getProfileThunkCreator(userId);
         this.props.getStatusThunkCreator (userId);
+        this.props.getFollowedUsersThunkCreator(this.props.friend)
     }
 
 // в componentDidMount() можно делать side effects (ajax запросы, setTimeOut, обращение к дом элементам напрямую)
@@ -47,7 +49,7 @@ class ProfileAPI extends  React.Component{
                     clickUserId = {!this.props.match.params.userId}
                     savePhoto = {this.props.updateProfilePhotoThunkCreator}
                     saveProfile = {this.props.saveProfileThunkCreator}
-
+                    usersFollowed = {this.props.usersFollowed}
 
            />
 
@@ -66,10 +68,12 @@ let mapStateToProps = (state)  =>({
     status: state.profile.status,
     userId: state.auth.userId,
     isAuth: state.auth.isAuth,
+    usersFollowed: state.usersPage.usersFollowed,
+    friend: state.usersPage.friend
 });
 
 export  default compose(
-    connect(mapStateToProps,{getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
+    connect(mapStateToProps,{getFollowedUsersThunkCreator, getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
     withRouter
 )(ProfileAPI);
 

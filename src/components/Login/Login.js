@@ -30,7 +30,7 @@ const LoginForm = (props) =>{
                             component={Input}
                             validate={[requiredField, maxLength10]}/></div>
                 <div className={classes.loginFormRememberMe}><Field name={'rememberMe'} type="checkbox"
-                            component={'input'} /> запомнить меня</div>
+                            component={'input'} /> <b>запомнить меня</b></div>
                {
                  props.error && <div className={classes.formSummaryError}> {props.error}</div>
                }

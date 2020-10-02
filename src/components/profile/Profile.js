@@ -2,6 +2,7 @@ import React from "react";
 import classes from './profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./myPosts/myPostsContainer";
+import MySubscriptions from "./MySubscriptions/MySubscriptions";
 
 
 const Profile = (props) =>{
@@ -18,6 +19,9 @@ const Profile = (props) =>{
                 savePhoto = {props.savePhoto}
                 saveProfile = {props.saveProfile}
 
+            />
+            <MySubscriptions
+                usersFollowed = {props.usersFollowed}
             />
             <MyPostsContainer />
 

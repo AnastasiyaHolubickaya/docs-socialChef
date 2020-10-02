@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const StyledHamburger = styled.button`
   position: fixed;
-   left: 12rem;
+  left: 12rem;
   top: 25px;
   width: 2rem;
   height: 2rem;
@@ -23,7 +23,7 @@ const StyledHamburger = styled.button`
     width: 2rem;
     height: 0.25rem;
     border-radius: 10px;
-    background-color: #FF8E88;
+    background-color: #00BCDF;
      transition: all 0.3s linear;
     transform-origin: 1px;
   
@@ -42,7 +42,7 @@ const StyledHamburger = styled.button`
     }
   }
   @media (max-width: 576px) {
-   left:10rem;
+   left:7rem;
   }
 `;
 

@@ -29,7 +29,9 @@ export  const getUsers = (state) => {
 export const getUsersReselect = createSelector(getUsers,(users) =>{//
     return users.filter(u=>true);
 });
-
+export const getUsersFollowReselect = createSelector(getUsers,(users) =>{//
+    return users.filter(u => u.followed === true);
+});
 //сложная зависимость от нескольтких селекторов
 export const getUsersReselect2 = createSelector(getUsers,getIsFetching,
     (users, isFetching) =>{//

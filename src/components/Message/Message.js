@@ -1,7 +1,7 @@
 import React from "react";
 import classes from './Message.module.css';
 import AddMessageContainer from "./AddMessage/AddMessageContainer";
-import SearchUsers from "../SearchUsers/SearchUsers";
+import SearchUsersContainer from "../SearchUsers/SearchUsersContainer";
 
 
 
@@ -9,7 +9,7 @@ import SearchUsers from "../SearchUsers/SearchUsers";
 let Counter = (props) =>{
   return  (<div className={classes.counterUsers}>
       <span className={classes.text}>всего пользователей online</span>
-      <span className={classes.numbers}>26</span>
+      <span className={classes.numbers}>5</span>
   </div>)
 };
 
@@ -19,8 +19,8 @@ const Message = (props) =>{
     //console.log(props);
     return(
         <div className={classes.dialogs}>
-            <h1>сообщения</h1>
-            <SearchUsers/>
+            <h1>Чат</h1>
+            <SearchUsersContainer/>
             <Counter/>
 
             <AddMessageContainer />

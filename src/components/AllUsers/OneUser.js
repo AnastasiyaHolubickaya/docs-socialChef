@@ -16,9 +16,9 @@ const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCrea
                     <NavLink to ={'/profile/' + u.id} > <img src={u.photos.small != null ? u.photos.small : face} alt={""}/> </NavLink>  <br/>
                     {u.followed
                         ?  <button disabled={isFollowingProgress.some(id=>id===u.id)}
-                                   onClick= {() => {unFollowThunkCreator(u.id) }}> UnFollow </button>  //props.unfollow(u.id) - диспатчим в редьюсер
+                                   onClick= {() => {unFollowThunkCreator(u.id) }}> Отписаться </button>  //props.unfollow(u.id) - диспатчим в редьюсер
                         :  <button disabled={isFollowingProgress.some(id=>id===u.id)}
-                                   onClick={() => {followThunkCreator(u.id)}}> Follow </button>
+                                   onClick={() => {followThunkCreator(u.id)}}> Подписаться </button>
                     }
                 </div>
                 <div className={classes.blockName}>

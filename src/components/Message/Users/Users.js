@@ -1,15 +1,17 @@
 import React from "react";
 import classes from './Users.module.css';
 import {NavLink} from "react-router-dom";
+import face from "../../../img/icons/user.jpg";
 
-const Users = (props) =>{
+const Users = ({massUsers}) =>{
     //console.log(props);
     let path='/dialogs/';
-    let dialog = props.dataDialogs.map(d=>
+    let dialog = massUsers.map(d=>
         <div key={d.id} className={classes.dialog}>
-            <img src={d.img} alt=""/>
+             <img src={ d.photos.small||face} alt=""/>
             <NavLink to={path + d.id}> <b>{d.name} </b>  </NavLink>
-            <span>{d.mess}</span>
+            <span>{d.mess||d.status}</span>
+
         </div>
     );
 

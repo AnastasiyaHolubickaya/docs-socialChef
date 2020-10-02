@@ -16,21 +16,23 @@ const ProfileForm = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit} className={classes.profileForm} >
                 <span className={classes.spanForm}> Редактирование профиля</span>
-            <b className={classes.bForm}>Введите имя</b> <Field name={'fullName'}
-                                              component={Input}
-                                              validate={[requiredField, maxLength20]}/>
+                <b className={classes.bForm}>Введите имя</b>
+                <Field name={'fullName'}
+                       component={Input}
+                       validate={[requiredField, maxLength20]}/>
                 <b className={classes.bForm}> O себе</b>
-               <Field name={'aboutMe'}
-                                     component={Textarea}
-                                     validate={[requiredField, maxLength200]}/>
+                <Field name={'aboutMe'}
+                       component={Textarea}
+                       validate={[requiredField, maxLength200]}/>
                 <b className={classes.bForm}> Профессиональные навыки </b>
-            <Field name={'lookingForAJobDescription'} placeholder={'введите текст'}
-                   component={Textarea}
-                   validate={[requiredField, maxLength200]}/>
+                <Field name={'lookingForAJobDescription'} placeholder={'введите текст'}
+                       component={Textarea}
+                       validate={[requiredField, maxLength200]}/>
 
                 <b className={classes.bForm}>Ищу работу:
-                 <Field name={'lookingForAJob'} type="checkbox"
-                                       component={'input'} /></b>
+                     <Field name={'lookingForAJob'}
+                            type="checkbox"
+                            component={'input'} /></b>
 
             <div className={classes.socialIcons}>
 

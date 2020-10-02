@@ -1,11 +1,30 @@
 .item{
-    width: 100%;
-    padding-top: 30px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    border-bottom: 1px solid;
 }
+
 .item img{
-    width: 50px;
+    width: 100px;
     margin-right: 20px;
+    margin-left: 0;
 }
+
+
 .item span{
-    font-size: 16px;
+    font-size: 14px;
+}
+
+@media screen and  (max-width: 576px){
+    .item img{
+        width: 70px;
+    }
+    .item{
+        text-align: center;
+    }
+    .item span{
+        font-size: 12px;
+    }
 }

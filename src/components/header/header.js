@@ -1,6 +1,6 @@
 import React from "react";
 import classes from './header.module.css';
-import logo from "../../img/logoChef.png";
+import logo from "../../img/hotpng.com (2).png";
 import Navbar from "./Navbar/Navbar";
 import {connect} from "react-redux";
 import {LogoutThunkCreator} from "../../redux/authReducer";
@@ -16,6 +16,9 @@ const Header = ({menuItems, isAuth, login, LogoutThunkCreator}) =>{
              </div>
 
             <div className={classes.nav}>
+                <div className={classes.quote}>
+                   <i>"Не волнуйтесь, если что-то не работает. Если бы всё работало, вас бы уволили..." </i>
+                </div>
                     <Navbar menuItems={menuItems}/>
                      <Navblock isAuth={isAuth}
                                login={login}

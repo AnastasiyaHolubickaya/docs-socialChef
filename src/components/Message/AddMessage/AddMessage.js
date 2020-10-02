@@ -31,8 +31,8 @@ const AddMessage = (props) =>{
 
     return(
         <div className={classes.block}>
-            <Users dataDialogs = {props.dataDialogs}/>
-            <h3>добавить сообщение</h3>
+            <Users massUsers={props.dataDialogs}/>
+            <h3>Добавить сообщение</h3>
             <MessageReduxForm onSubmit = {onSubmit}/>
         </div>
     )

@@ -4,9 +4,9 @@
     text-transform: capitalize;
     text-align: center;
     padding: 10px;
-    color: #444444;
+    color: #ffffff;
     font-weight: bold;
-
+    box-sizing: border-box;
 }
 .items{
     width: 33%;
@@ -15,11 +15,14 @@ b{
     color: #F4716A;
 }
 .link{
-   color: #444444;
+    color: #ffffff;
     text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
 }
 .link:hover{
-    color: #ffffff;
+    color: #00BCDF;
+    background: #ffffff;
 }
 
 

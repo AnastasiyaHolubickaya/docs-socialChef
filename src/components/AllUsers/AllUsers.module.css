@@ -32,42 +32,29 @@
 }
 .blockFoto button{
     width: 70px;
-    background-color: #F4716A;
-    border: 1px solid #F4716A;
+    background-color: #00BCDF;
+    border: none;
     border-radius: 5px;
     padding: 5px;
     color:#FFFFFF;
     outline: none;
+    font-size: 10px;
+    transition: all 0.5s ease 0s;
 }
 .blockFoto button:hover{
-    box-shadow:
-            0 2px 4px rgba(218,188,150, .8),
-            0 -2px 4px rgba(218,188,150,.8);
+    background-color: #FFF87A;
+    color: #444444;
 }
 .blockName .status{
     display: block;
     margin-top: 15px;
     font-weight: bold;
 }
-.btnShowMore{
-    margin: 0 auto;
+.blockName b{
+   color: #444444;
+    font-weight: bold;
+}
 
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    color:#DA3E33;
-    outline: none;
-}
-.active{
-    color: gold;
-}
-.dialogItems{
-
-}
-.messageItems{
-
-}
 .searchUsers{
     width: 100%;
     display: flex;
@@ -150,15 +137,13 @@
 }
 .counterUsers .numbers{
     float: right;
-    background: #DABC96;
+    background: #00BCDF;
     color: #fff !important;
     font-size: 14px;
     font-weight: bold;
     padding: 0 5px;
 }
-.counterUsers .numbers:hover{
-    background-color:#F4716A;
-}
+
 .viewingInfo {
     font-size: 19px;
     color: #444;

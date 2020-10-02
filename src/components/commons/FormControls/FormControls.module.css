@@ -1,15 +1,15 @@
 .textareaAddMess{
     width: 100%;
+    box-sizing: border-box;
 }
-
+.input{
+    width: 100%;
+    box-sizing: border-box;
+}
 .error input,
 .error textarea {
     border: 1px solid #FF0000;
-    background-image: url("../../../img/social_icons/1.png");
-    background-repeat: no-repeat;
-    background-position: right;
-
-
+    width: 100%;
 }
 .spanError{
     display: block;
@@ -19,7 +19,8 @@
     padding: 10px;
     background-color: #ffffff;
     border: 1px solid #FF0000;
-    width: 25%;
+    width: 100%;
+    box-sizing: border-box;
 }
 input {outline: none;}
 input:-webkit-autofill {

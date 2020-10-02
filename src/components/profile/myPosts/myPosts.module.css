@@ -1,6 +1,15 @@
 .block {
-    padding-left: 28px;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 10px;
+
     width: 100%;
+}
+.block h3{
+    margin: 20px;
+    font-size: 1.17em;
+    font-weight: bold;
 }
 .input_text{
     width: 75%;
@@ -42,4 +51,14 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+.formAddPost{
+    margin: 20px;
+
+}
+
+@media screen and  (max-width: 576px){
+    .block h3{
+        text-align: center;
+    }
 }

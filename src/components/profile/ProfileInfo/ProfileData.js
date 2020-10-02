@@ -7,20 +7,32 @@ import github from "../../../img/social_icons/github_101792.svg";
 import instagram from "../../../img/social_icons/instagram_101780.svg";
 import vk from "../../../img/social_icons/vk_101783.svg";
 import Button from "../../Button/Button";
+import cn from "classnames";
+import styled from "styled-components";
+
+
+const StyledLink = styled.a `
+  color: #17030C;
+  font-size: 12px;
+  text-decoration: none;
+  :hover {
+    color: #F704F2;
+    cursor: pointer;
+  }
+`;
 
 const massIcon = [
-    {name: "facebook",src: facebook},
-    {name: "youtube",src: youtube},
-    {name: "twitter", src: twitter},
-    {name: "github", src: github},
-    {name: "vk", src: vk},
-    {name: "instagram", src: instagram}
+    {id: 1, name: "facebook",src: facebook},
+    {id: 2, name: "youtube",src: youtube},
+    {id: 3, name: "twitter", src: twitter},
+    {id: 4, name: "github", src: github},
+    {id: 5, name: "vk", src: vk},
+    {id: 6, name: "instagram", src: instagram}
 ];
  const ViewSocialIcons = ({title, value}) => {
     return  massIcon.map(item =>
-        item.name === title &&
-            <div key = {item}> <img src={item.src} alt={""}/> <b>{value}</b></div>
-
+        (item.name === title)
+            && <div key = {item.id}> <img src={item.src} alt={""}/> <b><StyledLink target="_blank" href={value}> {value} </StyledLink> </b></div>
     );
 
 
@@ -30,36 +42,34 @@ const massIcon = [
 const ProfileData = ({profile, clickUserId, activeEditeMode}) =>{
 
     return(
-            <div>
-                <p>{profile.fullName}</p>
-                <div>
-                     <b> Обо мне:</b>
-                     <span className={classes.spanItem}>
-                         {profile.aboutMe}
-                    </span>
-                    <br/>
-
-                    <b>Ищу работу: </b>
-                      <span className={classes.spanItem}>
-                          {profile.lookingForAJob ? "да" : "нет"}
-                      </span> <br/>
-                    {profile.lookingForAJob &&
-                       <span> <b>Навыки:</b> {profile.lookingForAJobDescription}</span>
-                    }
-                </div>
-        <div className={classes.socialIcons}>
-
-            {
-                Object.keys(profile.contacts).map(key =>{
-                    return <ViewSocialIcons key={key} title = {key} value = {profile.contacts[key]} />
-                })
-            }
+            <div className={classes.dataBlock}>
+                        <p>{profile.fullName}</p>
+                        <div className={classes.gridBlock}>
+                             <b> Обо мне: </b>
+                             <span className={cn (classes.spanItem)}>
+                                 {profile.aboutMe}
+                            </span>
+                            <b>Ищу работу: </b>
+                              <span className={cn(classes.spanItem)}>
+                                  {profile.lookingForAJob ? "да" : "нет"}
+                              </span>
+                            <b>Навыки: </b>
+                            <span className={cn(classes.spanItem)}> {profile.lookingForAJobDescription}</span>
 
 
-        </div>
-                {clickUserId && <Button value={"редактировать профиль"} onClick={activeEditeMode}/> }
+                        </div>
+                    <div className={classes.socialIcons}>
+                        {
+                            Object.keys(profile.contacts).map(key =>
+                                (profile.contacts[key] != "" && profile.contacts[key] != null )
+                                && <ViewSocialIcons key={key} title = {key} value = {profile.contacts[key]} />
 
-</div>
+                                )
+                        }
+                    </div>
+                        {clickUserId && <Button value={"редактировать"} onClick={activeEditeMode}/> }
+
+            </div>
     )
 };
 

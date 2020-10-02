@@ -1,10 +1,9 @@
 .profileForm{
-
-    margin: 20px 0;
+    margin: 20px auto;
     padding: 20px;
-    width: 300px;
+    width: 100%;
     max-width: 300px;
-
+    box-sizing: border-box;
 }
 .spanForm{
     display: block;
@@ -15,8 +14,23 @@
    display: block;
     margin: 20px 0;
     font-size: 14px;
+    width: 100%;
+    color: #444444;
 }
 .formSummaryError {
     border: 1px solid red;
     color: red;
+}
+
+@media screen and  (max-width: 470px){
+    .profileForm{
+    text-align: center;
+
+    }
+}
+@media screen and  (max-width: 386px){
+    .profileForm{
+
+
+    }
 }

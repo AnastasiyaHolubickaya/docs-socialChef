@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import classes from './ProfileInfo.module.css';
-
 import Preloader from "../../Preloader/Preloader";
 import face from "../../../img/icons/user.jpg";
 import ProfileStatusHook from "./ProfileStatusHook";
@@ -41,9 +40,9 @@ const ProfileInfo = ({profile, status, updateStatus,clickUserId,savePhoto, saveP
 
             <div className={classes.flexBlock}>
                     <div className={classes.itemImg}>
-                        <img src={profile.photos.large||face} alt=""/>
+                        <img src={profile.photos.large||face} alt="фото пользователя"/>
                             {
-                               ( clickUserId ) && <input className={classes.input_btn} onChange={PhotoSelected}  type ="file"/>
+                               ( clickUserId ) && <label className={classes.input_btn} htmlFor="input__file" onChange={PhotoSelected}><input  id="input__file"   type ="file"/> загрузить фото </label>
                             }
                     </div>
                     <div className={classes.itemInfo}>

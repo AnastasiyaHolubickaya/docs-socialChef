@@ -1,22 +1,30 @@
 .btn{
-    margin-top: 15px;
-    background: #FF7B74 !important;
-    color: #fff !important;
+
+    background: #00BCDF;
+    color: #fff;
     font-size: 12px;
     text-align: center;
-    font-weight: 600 !important;
-    padding: 9px 14px;
+    font-weight: 600;
+    padding: 6px 12px;
     border-radius: 3px;
     text-transform: uppercase;
     cursor: pointer;
     border: none;
     outline: none;
-
+    transition: all 0.5s ease 0s;
 }
 .btn:hover{
-    text-transform: none;
+    background: #FFF87A;
+    color: #444444;
 }
 
 .btn:focus{
     outline: none;
+}
+@media screen and  (max-width : 600px) {
+    .btn{
+        font-size: 10px;
+        padding: 4px 9px;
+    }
+
 }

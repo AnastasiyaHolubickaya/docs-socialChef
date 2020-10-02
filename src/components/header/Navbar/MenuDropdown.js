@@ -1,7 +1,5 @@
 import React, {useEffect, useRef} from "react";
 import {useState} from "react";
-//import classes from './Navbar.module.css'
-//import {NavLink} from "react-router-dom";
 import styled from "styled-components";
 import Hamburger from "./Hamburger";
 import classes from "./Navbar.module.css";
@@ -13,29 +11,32 @@ const StyledMenu = styled.nav `
   height: 100vh;
   width: 35vw;
   position: fixed;
-  background-color: rgba(226, 215, 195, 0.8);
+  background-color: rgb(255, 255, 255, 0.9);
   z-index: 1;
   padding: 80px 0;
   flex-direction: column;
+  text-align: left;
   display: ${({ open }) => (open ? "flex" : "none")};
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) =>
     (open ? "translateX(0)" :"translateX(-100%)")};
     @media (max-width: 524px) {
-   width: 60%;
+   width:60%;
   }
 `;
 const StyledLink = styled(NavLink) `
   padding: 10px;
   font-size: 1rem;
-  color: #000000;
+  color: #00BCDF;
   font-weight: 900;
   text-decoration: none;
   text-transform: uppercase;
+  transition: all 0.5s ease 0s;
   
   :hover {
     color: #ffffff;
-    background-color:#FF7A73;
+    background-color:#00BCDF;
+    color: #ffffff;
     cursor: pointer;
   }
 `;
@@ -75,7 +76,6 @@ const MenuBurger = ({mass})=> {
         )
     };
 
-
     return (
         <div ref={ref}>
             <StyledMenu open={open}>
@@ -85,13 +85,5 @@ const MenuBurger = ({mass})=> {
 
         </div>
     );
-
-
-
-
-
 };
 export default MenuBurger;
-/*<StyledLink onClick={() => close()}>Link 1</StyledLink>
-                <StyledLink onClick={() => close()}>Link 2</StyledLink>
-                <StyledLink onClick={() => close()}>Link 3</StyledLink>*/

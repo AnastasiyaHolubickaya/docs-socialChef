@@ -6,7 +6,7 @@ import Header from "./components/header/header";
 import News from "./components/news/news";
 import ProfileAPI from "./components/profile/profileAPI";
 
-import Home from "./components/Home/Home";
+import HomeApi from "./components/Home/HomeApi";
 import Register from "./components/Register/Register";
 import Recipes from "./components/Recipes/Recipes";
 import Universal from "./components/Universal/Universal";
@@ -65,7 +65,7 @@ class App extends Component {// делаем app классовой компон
                         <Route path='/login' render={() => <Login/>}/>
                         <Route path='/users' render={() => <AllUsersAPI/>}/>
 
-                         <Route exact path='/' render={() => <Home/>}/>
+                         <Route exact path='/' render={() => <HomeApi/>}/>
 
                 </div>
 

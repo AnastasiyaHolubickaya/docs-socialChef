@@ -6,8 +6,11 @@ import authReducer from "./authReducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./appReducer";
-//импортируем редаксовский редьюсер
+import menuReducer from "./menuReducer";
+import newsReducer from "./NewsReducer";
 
+//импортируем редаксовский редьюсер
+// redux  - библиотека,  состоит из store  у которого есть  state и  reducers
 
 let reducers = combineReducers(
     {
@@ -16,7 +19,9 @@ let reducers = combineReducers(
         usersPage: usersReducer,
         auth: authReducer,
         form: formReducer,//редаксовский
-        app: appReducer
+        app: appReducer,
+        headerMenu: menuReducer,
+        news: newsReducer
 
     }
 
@@ -30,3 +35,7 @@ const store = createStore(reducers, composeEnhancers(
   window.store = store;// сохранили store в глобальный объект window
 */
 export default store;
+// у store есть 3 основных метода -
+// store.getState(), получить актуальные данные из state
+// store.Subckriber(subskriber), подписаться на изменения
+// store.dispatch(action) преобразовать state

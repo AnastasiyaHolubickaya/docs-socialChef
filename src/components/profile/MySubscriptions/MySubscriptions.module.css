@@ -1,0 +1,43 @@
+.blockSubscriptions {
+    width: 100%;
+    display: grid;
+    grid-template: repeat(2, auto)/repeat(5, auto);
+    row-gap: 15px;
+    text-align: center;
+}
+.block{
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+.block h3{
+    display: block;
+    margin: 20px;
+    font-size: 1.17em;
+    font-weight: bold;
+}
+.item{
+    font-size: 14px;
+    margin-left: 10px;
+    font-weight: normal;
+}
+.item img{
+    width: 50px;
+}
+
+
+
+
+@media screen and  (max-width : 500px) {
+    .blockSubscriptions {
+        grid-template: repeat(2, auto)/repeat(3, auto);
+    }
+    .item{
+        font-size: 12px;
+    }
+    .block{
+       text-align: center;
+    }
+}

@@ -4,7 +4,6 @@
     box-sizing: border-box;
     padding: 50px;
     margin: 0 auto;
-
 }
 .dialogs:after {
     content: "."; /* добавить содержимое: "." */
@@ -14,20 +13,13 @@
     height: 0;  /* сделать высоту 0, чтобы не занимал место */
 }
 
-.active{
-    color: gold;
+.dialogs h1{
+    color: #ffffff;
 }
-.dialogItems{
 
-}
-.messageItems{
-
-}
 .searchUsers{
     margin: 0 auto;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
 
 }
 .searchUsers .title{
@@ -44,9 +36,8 @@
     background-color: #ffffff;
     position: relative;
     align-self: center;
-
 }
-.searchUsers .search .inputSearch{
+.inputSearch input{
     font-size: 13px;
     font-weight: 400;
     padding: 9px 10px;
@@ -54,37 +45,22 @@
     color: #666;
     border-radius: 3px;
     background: #fff;
-
     outline: none;
 }
-.inputSearch::placeholder{
+.inputSearch input::placeholder{
     color: #dddddd;
     opacity: 1;
     transition: all 0.2s ease-in;
     text-transform: capitalize;
 }
-.inputSearch:focus::placeholder{
+.inputSearch input:focus::placeholder{
     opacity: 0;
     transition: all 0.2s ease-in;
 }
-
 .searchUsers .search .buttonSearch{
     position: absolute;
     right:10px;
-    background: #FF8E88 !important;
-    color: #fff !important;
-    font-size: 12px;
-    text-align: center;
-    font-weight: 600 !important;
-    padding: 9px 14px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: none;
-    outline: none;
-}
-.searchUsers .search .buttonSearch:hover{
-    background-color:#F4716A;
+    top: 15px;
 }
 .counterUsers{
     width: 100%;
@@ -100,21 +76,17 @@
     box-sizing: border-box;
     float: left;
     margin-bottom: 22px;
-
 }
 .counterUsers .text{
     float: left;
 }
 .counterUsers .numbers{
     float: right;
-    background: #DABC96;
+    background:#00BCDF;
     color: #fff !important;
     font-size: 14px;
     font-weight: bold;
     padding: 0 5px;
-}
-.counterUsers .numbers:hover{
-    background-color:#F4716A;
 }
 .viewingInfo {
     font-size: 19px;
@@ -122,13 +94,9 @@
     margin-bottom: 22px;
     clear: both;
 }
-
 @media screen and (max-width: 524px) {
     .dialogs{
         padding: 5px;
     }
-    .search{
-        width: 100%;
 
-    }
 }

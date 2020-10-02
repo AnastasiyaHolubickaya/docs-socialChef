@@ -7,12 +7,12 @@ import {maxLengthCreator, requiredField} from "../../../utils/validation/validat
 import {Textarea} from "../../commons/FormControls/FormControls";
 import Button from "../../Button/Button";
 
-const maxLength10 = maxLengthCreator(10);// обязательно создаем за пределами формы иначе возникнет цикличночть
+const maxLength300 = maxLengthCreator(300);// обязательно создаем за пределами формы иначе возникнет цикличночть
 
 const AddMyPostForm = (props) =>{
     return(
-        <form onSubmit={props.handleSubmit}>
-            <div><Field name={'post'} placeholder={'post'} component={Textarea} validate={[requiredField, maxLength10]}/></div>
+        <form onSubmit={props.handleSubmit} className={classes.formAddPost}>
+            <div><Field name={'post'} placeholder={'post'} component={Textarea} validate={[requiredField, maxLength300]}/></div>
             <div> <Button value="добавить"/></div>
         </form>
     )
@@ -23,7 +23,6 @@ const AddMyPostReduxForm = reduxForm({
 })(AddMyPostForm);
 
 const MyPosts = (props) =>{
-    console.log('render');
     const onSubmit = (formData) => {// сюда придут данные их формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
         props.addPost(formData.post);// вызываем (из пропсов) функцию из BLL
     };
@@ -31,9 +30,9 @@ const MyPosts = (props) =>{
     return(
             <div className={classes.block}>
                 <h3>My posts</h3>
-                <AddMyPostReduxForm onSubmit = {onSubmit}/>
-                <Post dataMyPosts = {props.dataMyPosts}/>
 
+                <Post dataMyPosts = {props.dataMyPosts}/>
+                <AddMyPostReduxForm onSubmit = {onSubmit}/>
             </div>
 
     )

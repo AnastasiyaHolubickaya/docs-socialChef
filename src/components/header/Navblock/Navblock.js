@@ -17,7 +17,7 @@ const Navblock = ({isAuth, login, LogoutThunkCreator }) =>{
                 <div className={cn (classes.itemsSize, classes.item2)}>
                     {isAuth
                         ? <div>
-                            <span> Привет, {login}</span>
+                            <span className={classes.login}> {login}</span>
                              <Button  value={"Выход"} onClick={LogoutThunkCreator}><NavLink to={`/users`}> </NavLink></Button>
 
                           </div>

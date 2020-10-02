@@ -6,11 +6,11 @@ const ADD_MESS = 'ADD-MESS';
 
 let initialState = {
     dataDialogs: [
-        {img:face, id: 1, name: 'vlad', mess: 'hi'},
-        {img:face, id: 2, name: 'alex', mess: 'тру ля ля'},
-        {img:face, id: 3, name: 'anna', mess: 'бла бла' },
-        {img:face, id: 4, name: 'mark', mess: 'ку ку'},
-        {img:face, id: 5, name: 'john', mess: 'цук цук'}
+        {photos:{small:face}, id: 1, name: 'vlad', mess: 'hi'},
+        {photos:{small:face}, id: 2, name: 'alex', mess: 'тру ля ля'},
+        {photos:{small:face}, id: 3, name: 'anna', mess: 'бла бла' },
+        {photos:{small:face}, id: 4, name: 'mark', mess: 'ку ку'},
+        {photos:{small:face}, id: 5, name: 'john', mess: 'цук цук'}
     ],
     dataMessages: [
         {id: 1, },
@@ -34,7 +34,7 @@ let initialState = {
              // {img:face, mess: state.newText, id:id, name:"unknow"} - формируем новый объект со значениями (mess берем из state, так как функция changePost его уже обновила)
              return {//делаем копию объекта, т.к. не имеет право менять state напрямую, и сразу возвращаем его
                  ...state,
-                 dataDialogs: [...state.dataDialogs, {img:face, mess: action.message, id:id, name:"unknow"}]
+                 dataDialogs: [...state.dataDialogs, {photos:face, mess: action.message, id:id, name:"unknow"}]
                  // пушим его в dataMyPosts
              };
              // dataDialogs: [...state.dataDialogs - глубоко копируем только то, что будем менять

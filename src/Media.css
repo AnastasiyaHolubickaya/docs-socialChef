@@ -9,5 +9,10 @@
     .profile_block img {
         width: 50%;
     }
-
+    .burger{
+       display: block;
+    }
+    .menu{
+        display: none;
+    }
 }

@@ -1,7 +1,13 @@
-import face from "../img/photo_2020-07-26_23-35-01.jpg";
+import face from "../img/hotpng.com (2).png";
+import img2 from "../img/links/photo_2020-09-27_22-49-04.jpg";
+import img1 from "../img/links/photo_2020-09-27_23-09-47.jpg";
+import img3 from "../img/links/photo_2020-09-27_23-14-45.jpg";
 import {profileApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 
+//reducer  - это функция, которая преобразовывает  state  через объект action ( у которого есть как минимум  type)
+//каждый reducer отвечает за свою часть стейта, получает   action, часть стейта
+// и преобразовывает  state инъютабельно (не перерисовывает входящий стейт а работает с копией)
 
 const ADD_POST = 'ADD-POST';
 const  SET_USERS_PROFILE = 'SET_USERS_PROFILE';
@@ -12,9 +18,13 @@ const SET_PHOTO = 'SET_PHOTO';
 
 let initialState = {
     dataMyPosts:[
-        {id: 1, img:null, mess:"Данные захардкодены в state, profileReducer ", like:15},
-        {id: 2, img:null, mess:"  Запросы к серверу пока не реализованы", like:4}
-    ],
+        {id: 1, img:img1, mess:"способ отложенной загрузки изображений для максимальной производительности.", link:"https://blog.prototyp.digital/best-way-to-lazy-load-images-for-maximum-performance", like:15},
+        {id: 2, img:img2, mess:"Веб-разработчику: 10 полезных инструментов.", link:"https://habr.com/ru/company/ruvds/blog/515004", like:4},
+        {id: 3, img:img3, mess:"Анимируйте SVG viewBox с помощью React.", link:"https://elijahmanor.com/blog/react-svg-viewbox", like:4},
+        {id: 4, img:null, mess:"5 самых раздражающих особенностей веб-сайтов...", link:"https://bighack.org/5-most-annoying-website-features-i-face-as-a-blind-screen-reader-user-accessibility", like:4}
+
+
+        ],
     profile: null,
     status:"",//1
 
@@ -67,11 +77,16 @@ export  const  getStatusThunkCreator = (userId) => (dispatch) => {//5
     })
 };
 
-export  const  updateStatusThunkCreator = (status) => (dispatch) => {
-    profileApi.updateStatus(status).then(response => {
+export  const  updateStatusThunkCreator = (status) => async (dispatch) => {
+    try {
+        const response = await profileApi.updateStatus(status);
         if(response.data.resultCode === 0)
-        dispatch(setStatus(status));
-    })
+            dispatch(setStatus(status));
+    } catch (e) {
+
+    }
+    
+    
 };
 export  const  updateProfilePhotoThunkCreator = (file) => (dispatch) => {
     profileApi.addPhoto(file).then(response => {

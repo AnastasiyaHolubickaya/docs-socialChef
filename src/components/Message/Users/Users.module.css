@@ -15,13 +15,18 @@
     float: left;
     margin-right: 10px;
 }
-.dialog a{
+.dialog b{
     font-weight: 700;
-    color: #F4716A !important;
+    color: #444444;
     transition: all 0.2s ease-in;
     outline: none;
-    text-decoration: none;
     text-transform: capitalize;
     display: block;
     margin-bottom: 10px;
+}
+.dialog a{
+    text-decoration: none;
+}
+.dialog b:hover{
+    color: #8FBF83;
 }

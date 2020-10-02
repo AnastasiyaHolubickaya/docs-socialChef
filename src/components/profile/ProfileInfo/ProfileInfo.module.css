@@ -1,70 +1,79 @@
+
 .flexBlock{
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
 }
 .itemImg {
-    width: 300px;
-   max-width: 300px;
-    margin: 20px;
+    width: 30%;
+    max-width: 300px;
+    margin-right: 20px;
     text-align: center;
+}
+.itemImg input{
+    display: none;
 }
 .itemImg img{
     width: 100%;
 }
 .itemInfo{
-    width: 60%;
+    width: 70%;
     max-width: 600px;
-    margin: 20px;
+
 
 }
 .itemInfo p{
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
+    text-decoration: underline;
+    margin-bottom: 23px;
 }
-.spanItem{
- line-height: 2;
-    font-size: 14px;
-    color: #000000;
-
-}
-.spanItem b{
-    font-size: 16px;
-
-}
-.socialIcons b{
-    font-size: 12px;
 
 
-}
+
 .socialIcons  img{
     width: 25px;
     vertical-align: middle;
 }
 .socialIcons {
-
-    margin-top: 20px;
+    margin: 20px 0;
+    display: grid;
+    grid-template: repeat(2, auto)/repeat(2, auto);
+    row-gap: 5px;
+    text-align: left;
 }
-socialIcons div{
-    margin-bottom: 5px;
+b{
+    color: #444444;
 }
 
 .input_btn{
     margin-top: 20px;
-    background: #FF8E88 !important;
-    color: #fff !important;
-    font-size: 12px;
+    background-color:#00BCDF ;
+    color: #fff;
+    font-size: 10px;
     text-align: center;
     font-weight: 600 !important;
-    padding: 9px 14px;
+    padding: 5px 10px;
     border-radius: 3px;
     text-transform: uppercase;
     cursor: pointer;
     border: none;
     outline: none;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    white-space: nowrap;
 }
+.input_btn:hover{
+    background-color: #FFF87A;
+    color: #444444;
+}
+
+
 .displayNone{
     display: none;
 }
@@ -74,12 +83,10 @@ socialIcons div{
     background-color: #ffffff;
 }
 .profileForm{
-
     margin: 20px 0;
     padding: 20px;
     width: 300px;
     max-width: 300px;
-
 }
 .spanForm{
     display: block;
@@ -89,4 +96,98 @@ socialIcons div{
 .bForm{
     text-transform: none;
     font-size: 14px;
+}
+
+.gridBlock{
+     width: auto;
+    display: grid;
+    grid-template: repeat(3,auto) / repeat(2, auto);
+    grid-gap: 7px;
+    margin-bottom: 23px;
+    font-size: 14px;
+    color: #444444;
+}
+.gridBlock b:nth-of-type(1){
+    grid-column: 1/2;
+    grid-row: 1;
+
+}
+.gridBlock b:nth-of-type(2){
+    grid-column: 1/2;
+    grid-row: 2;
+}
+.gridBlock b:nth-of-type(3){
+    grid-column: 1/2;
+    grid-row: 3;
+}
+.gridBlock span:nth-of-type(1){
+    grid-column: 2/2;
+    grid-row: 1;
+}
+.gridBlock span:nth-of-type(2){
+    grid-column: 2/2;
+    grid-row: 2;
+}
+.gridBlock span:nth-of-type(3){
+    grid-column: 2/2;
+    grid-row: 3;
+}
+@media screen and  (max-width : 800px) {
+    .socialIcons {
+        margin-left: 15px;
+        grid-template: repeat(3,auto)/repeat(1, auto);
+    }
+}
+
+
+@media screen and  (max-width : 600px) {
+
+    .gridBlock{
+        font-size: 12px;
+    }
+    .itemImg {
+        margin: 10px;
+    }
+    .itemInfo{
+        margin: 10px;
+    }
+
+}
+@media screen and  (max-width : 470px) {
+    .input_btn{
+        font-size: 8px;
+        padding: 5px;
+    }
+    .itemInfo p{
+        font-size: 13px;
+    }
+    .span{
+        font-size: 13px;
+    }
+    .flexBlock{
+        flex-direction: column;
+    }
+    .itemInfo{
+        width: 100%;
+        text-align: center;
+    }
+    .gridBlock{
+        text-align: justify;
+        margin-left: 15px;
+    }
+    .itemImg {
+        align-self: center;
+    }
+}
+@media screen and  (max-width : 400px) {
+    .gridBlock{
+        margin: 10px 15px;
+        font-size: 10px;
+    }
+    .socialIcons {
+        margin: 10px 15px;
+    }
+    .socialIcons a{
+        font-size: 10px;
+    }
 }
