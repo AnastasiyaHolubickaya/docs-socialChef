@@ -2,22 +2,20 @@
 import {addMessActionCreator} from "../../../redux/dialogReducer";
 import AddMessage from "./AddMessage";
 import {connect} from "react-redux";
+import {getProfileThunkCreator} from "../../../redux/profileReducer";
 
 let mapStateToProps = (state) => {
     return {
-        dataDialogs: state.dialogs.dataDialogs
+        dataDialogs: state.dialogs.dataDialogs,
+        login: state.auth.login,
+        userId: state.auth.userId,
+        profile: state.profile.profile
     }
 
 };
-let mapDispatchToProps = (dispatch) => {
-  return {
-      addNewMess: (message) => {
-          dispatch(addMessActionCreator(message));
-      }
-  }
-};
 
-const AddMessageContainer = connect(mapStateToProps,mapDispatchToProps )(AddMessage);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
+
+const AddMessageContainer = connect(mapStateToProps,{addMessActionCreator, getProfileThunkCreator} )(AddMessage);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
 
 
 

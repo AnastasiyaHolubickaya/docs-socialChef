@@ -11,7 +11,8 @@
     color: gold;
 }
 .dialog img{
-    width: 100px;
+    width: 70px;
+    border-radius: 50%;
     float: left;
     margin-right: 10px;
 }

@@ -1,3 +1,4 @@
+/*
 import face from "../img/avatar.jpg";
 import profileReducer from "./profileReducer";
 import dialogReducer from "./dialogReducer";
@@ -56,7 +57,7 @@ let store = {
 
 
 
-window.store = store;
+window.store = store;*/
 /*
 
 //для того, чтоб не создавать циклическую зависимость (не импортировать в этот файл функцию reRender из index.js)
@@ -80,7 +81,8 @@ export let changePost = (newText) =>{ //функция принимает  зн�
     state.profile.newText = newText; // переписывает значение newText в state
     reRender(state);
 };
-*/
+
 
 
 export default store;
+*/

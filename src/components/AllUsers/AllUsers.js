@@ -3,6 +3,7 @@ import classes from './AllUsers.module.css';
 import Preloader from "../Preloader/Preloader";
 import Pagination from "./Pagination";
 import OneUser from "./OneUser";
+import SearchUsersContainer from "../SearchUsers/SearchUsersContainer";
 
 
 /*let Search = (props) =>{
@@ -29,7 +30,7 @@ const AllUsers = (props) =>{
     //console.log(props);
     return(
         <div className={classes.usersPage}>
-
+            <SearchUsersContainer/>
             <Counter userCount = {props.userCount}/>
             <Pagination
                 userCount = {props.userCount}

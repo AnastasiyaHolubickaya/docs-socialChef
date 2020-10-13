@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import face from "../../img/icons/user.jpg";
 import cn from "classnames";//позволяет перечислять классы через запятую, а также вставлять условие для отображения того или иного класса
 const OneUser = ({users,isFollowingProgress,unFollowThunkCreator,followThunkCreator, ...props}) =>{
-    console.log(users);
+
 
 
     return(
