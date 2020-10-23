@@ -9,6 +9,14 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+.pageHome h4{
+    color: #ffffff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.pageHome h4 a{
+    color: #FFCF00;
+}
 .items{
     display: flex;
     flex-flow: row wrap;

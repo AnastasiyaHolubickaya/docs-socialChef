@@ -10,7 +10,7 @@ export type initialStateType={
     login: string|null,
     email: string|null,
     isAuth: boolean,
-    captchaUrl: string|null
+    captchaUrl?: string|null
 }
 let initialState:initialStateType = {
     userId: null,
@@ -58,7 +58,7 @@ export  const  AuthThunkCreator = () => async (dispatch:any) => {
     };
 
 //thunk
-export  const  LoginThunkCreator = (email:string, password:string, rememberMe:boolean, captchaUrl:string) => async (dispatch:any) => {
+export  const  LoginThunkCreator = (email:string, password:string, rememberMe:boolean, captchaUrl:string|null) => async (dispatch:any) => {
       let response = await  authApi.login(email, password, rememberMe, captchaUrl);
             if(response.data.resultCode === 0){
                 dispatch(AuthThunkCreator())

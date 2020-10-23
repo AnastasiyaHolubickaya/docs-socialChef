@@ -1,20 +1,12 @@
 import face from "../img/icons/user.jpg";
+import {dataUsersType, usersType} from "./types/types";
 
 
 
 
 const ADD_MESS = 'ADD-MESS';
 
-type photoType={
-    small:string|null
-    large?:string|null
-}
-type dataUsersType ={
-    photos:photoType
-    id: number|null
-    name: string|null
-    mess: string|null
-}
+
 type initialStateType = {
     dataDialogs:Array<dataUsersType>
 }
@@ -28,11 +20,11 @@ type actionType={
 
 let initialState:initialStateType = {
     dataDialogs: [
-        {photos:{small:face}, id: 1, name: 'vlad', mess: 'hi'},
-        {photos:{small:face}, id: 2, name: 'alex', mess: 'тру ля ля'},
-        {photos:{small:face}, id: 3, name: 'anna', mess: 'бла бла' },
-        {photos:{small:face}, id: 4, name: 'mark', mess: 'ку ку'},
-        {photos:{small:face}, id: 5, name: 'john', mess: 'цук цук'}
+        {photos:{small:face}, id: 1, name: 'АНАСТАСИЯ', mess: 'hi'},
+        {photos:{small:face}, id: 2, name: 'SAMURAI DIMYCH', mess: 'hi'},
+        {photos:{small:face}, id: 3, name: 'ALEXANDERKHODARYONOK', mess: 'hi' },
+        {photos:{small:face}, id: 4, name: 'MARINA', mess: 'hi'},
+        {photos:{small:face}, id: 5, name: 'ESSEDGER', mess: 'hi'}
     ]
 };
 

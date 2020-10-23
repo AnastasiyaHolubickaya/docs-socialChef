@@ -1,12 +1,9 @@
+import {menuItemsType} from "./types/types";
 
 
 const  SET_MENU = ' SET_MENU';
 
-type menuItemsType = {
-    id: number
-    title:string|null
-    path:string|null
-}
+
 type initialStateType = {
     menuItems: Array<menuItemsType>
 }
