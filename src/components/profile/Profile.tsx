@@ -13,7 +13,7 @@ type propsType={
     usersFollowed:Array<usersType>
     clickUserId:boolean
     savePhoto:(file:any)=>void
-    saveProfile:(profile:profileType)=>{resultCode:number}
+    saveProfile:(profile:profileType)=>void
 }
 
 const Profile:React.FC<propsType> = ({profile, status, updateStatus,clickUserId,savePhoto,saveProfile,usersFollowed}) =>{

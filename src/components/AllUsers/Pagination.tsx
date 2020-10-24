@@ -21,7 +21,7 @@ const Pagination:React.FC<propsType>= ({currentPage,pageSize,userCount,onPageCha
     }
 
     let portionCount = Math.ceil( pagesCount / portionSize);
-    let [portionNumber, setPortionNumber] = useState(1);
+    let [portionNumber, setPortionNumber] = useState(1);//useState функция дженерик, поэтому можем уточнить тип принимаемых данных useState<number|null>
     let leftPortionPageNumber = (portionNumber-1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 

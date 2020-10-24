@@ -1,6 +1,9 @@
 import {usersApi} from "../api/api";
 import {updateMass} from "../utils/mapingState";
 import {usersType} from "./types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
+import {Action, Dispatch} from "redux";
 
 
 const FOLLOW = 'FOLLOW';
@@ -19,7 +22,7 @@ type followActionType={
 }
 type setUsersActionType={
     type:typeof SET_USERS
-    users:usersType
+    users:Array<usersType>
 }
 type unfollowActionType={
     type:typeof UNFOLLOW
@@ -27,7 +30,7 @@ type unfollowActionType={
 }
 type setFollowedUsersActionType={
     type:typeof SET_FOLLOWED_USERS
-    usersFollowed:usersType
+    usersFollowed:Array<usersType>
 }
 type setCurrentPageActionType={
     type:typeof SET_CURRENT_PAGE
@@ -48,16 +51,14 @@ type setToggleIsFollowingActionType={
 }
 type setSearchUsersActionType={
     type:typeof SET_SEARCH_USERS_FOR_NAME
-    users:usersType
+    users:Array<usersType>
 }
+type actionsType= followActionType | unfollowActionType | setUsersActionType | setSearchUsersActionType |setToggleIsFollowingActionType | setUsersCountActionType | setCurrentPageActionType | setFollowedUsersActionType |ToggleIsFetchingActionType;
 
 let initialState = {
     users:[] as Array<usersType>,
-    searchUsersForName:[] as Array<usersType>,
+    searchUsersForName:[]as Array<usersType>,
     usersFollowed:[] as Array<usersType>,
-        /*{id:1, foto: face, followod: true, fullName:"Alex D.", usersStatus:'всем привет :)', locations:{city:'minsk',country:'belarus'}},
-        {id:2, foto: face, followod: false, fullName:"John D.", usersStatus:'всем привет :)', locations:{city:'minsk',country:'belarus'}},
-        {id:3, foto: face, followod: true, fullName:"Bikki D.", usersStatus:'всем привет :)', locations:{city:'minsk',country:'belarus'}}*/
     pageSize: 5,
     usersCount: 0,
     currentPage: 1,
@@ -65,8 +66,8 @@ let initialState = {
     isFetching: false,//  приставка is для названия переменных с булевым значением: true/false
     isFollowingProgress: [] as Array<number>//массив id пользователей
 };
-type initialStateType  = typeof initialState;
-const usersReducer =  (state = initialState, action:any):initialStateType=> {
+type initialState  = typeof initialState;
+const usersReducer =  (state = initialState, action:actionsType):initialState=> {
     switch (action.type) {
 
         case FOLLOW:
@@ -124,18 +125,22 @@ const usersReducer =  (state = initialState, action:any):initialStateType=> {
 // функции action creaters  - возвращают action
 export const follow =(userId:number):followActionType=> ({type: FOLLOW, userId });// если функция только возвращает  можно не ставить return
 export const unfollow = (userId:number):unfollowActionType =>({ type: UNFOLLOW, userId});
-export const setUsers = (users:usersType):setUsersActionType => ({type: SET_USERS, users});
-export const setFollowedUsers = (usersFollowed:usersType):setFollowedUsersActionType => ({type: SET_FOLLOWED_USERS, usersFollowed});
+export const setUsers = (users:Array<usersType>):setUsersActionType => ({type: SET_USERS, users});
+export const setFollowedUsers = (usersFollowed:Array<usersType>):setFollowedUsersActionType => ({type: SET_FOLLOWED_USERS, usersFollowed});
 export const setCurrentPage = (currentPage:number):setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage});
 export const setUsersCount = (usersCount:number):setUsersCountActionType => ({type: SET_USERS_COUNT, usersCount});
 export const setToggleIsFetching = (isFetching:boolean):ToggleIsFetchingActionType =>({type: TOGGLE_IS_FETCHING, isFetching});
 export const  setToggleIsFollowing = (isFollowingProgress:any, userId:number):setToggleIsFollowingActionType => ({type: TOGGLE_IS_FOLLOWING, isFollowingProgress, userId});
-export const setSearchUsers = (users:usersType):setSearchUsersActionType => ({type: SET_SEARCH_USERS_FOR_NAME, users});
+export const setSearchUsers = (users:Array<usersType>):setSearchUsersActionType => ({type: SET_SEARCH_USERS_FOR_NAME, users});
 
 //делаем thunc - функция котоая диспатчит action creaters если санке нужны какие-то данные, оборачиваем ее
 // в функцию высшего порядка ThuncCreater (может принимать данные и возвращает Thunc)
 // и в нее передаем неолбходимые данные
-export  const  getUsersThunkCreator = (currentPage:number,pageSize:number) => async (dispatch:any) => {
+type thuncType = ThunkAction<Promise<void>,AppStateType,unknown, actionsType>
+type dispatchType= Dispatch<actionsType>
+
+export  const  getUsersThunkCreator = (currentPage:number,
+                                       pageSize:number): thuncType => async (dispatch) => {
     dispatch(setToggleIsFetching(true));
     dispatch(setCurrentPage(currentPage));
    let data= await usersApi.getUsers(currentPage, pageSize);
@@ -143,11 +148,11 @@ export  const  getUsersThunkCreator = (currentPage:number,pageSize:number) => as
        dispatch(setUsers(data.items));
        dispatch(setUsersCount(data.totalCount));
 };
-export  const  getUsersSearchThunkCreator = (name:string) => async (dispatch:any) => {
+export  const  getUsersSearchThunkCreator = (name:string):thuncType => async (dispatch) => {
     let data= await usersApi.getUsersForName(name);
             dispatch(setSearchUsers(data.items));
     };
-export  const  getFollowedUsersThunkCreator = (friend:boolean) => async (dispatch:any) => {
+export  const  getFollowedUsersThunkCreator = (friend:boolean):thuncType => async (dispatch) => {
     let data= await usersApi.getFollowedUsers(friend);
             dispatch(setFollowedUsers(data.items));
     };
@@ -155,7 +160,7 @@ export  const  getFollowedUsersThunkCreator = (friend:boolean) => async (dispatc
 //т к в санках follow/unfollow есть дублирующийся код, делаем рефакторинг ,
 // для этого создаем универсальную функцию
 // а затем ее уже будем вызывать в санках
-    const followUnfollow = async (dispatch:any, id:number, apiMethod:any, actionCreator:any) => {
+    const followUnfollow = async (dispatch:dispatchType, id:number, apiMethod:any, actionCreator:(id:number)=> followActionType|unfollowActionType) => {
         dispatch(setToggleIsFollowing(true, id));
         let data = await apiMethod(id);
         if(data.resultCode === 0){
@@ -163,13 +168,13 @@ export  const  getFollowedUsersThunkCreator = (friend:boolean) => async (dispatc
         }
         dispatch(setToggleIsFollowing(false, id));
     };
-    export  const  followThunkCreator = (id:number) => {
-        return async (dispatch:any) => {
+    export  const  followThunkCreator = (id:number):thuncType => {
+        return async (dispatch) => {
             followUnfollow(dispatch, id, usersApi.subscribeUsers.bind(usersApi), follow);
         }
     };
-    export  const  unFollowThunkCreator = (id:number) => {
-        return async (dispatch:any) => {
+    export  const  unFollowThunkCreator = (id:number):thuncType => {
+        return async (dispatch) => {
             followUnfollow(dispatch, id, usersApi.unSubscribeUsers.bind(usersApi), unfollow);
         }
 };

@@ -41,8 +41,6 @@ class MessageApi extends  React.Component<propsType>{
             />
         )
     }
-
-
 }
 
 let mapStateToProps = (state:AppStateType):mapStatePropsType =>({
@@ -56,7 +54,8 @@ let mapStateToProps = (state:AppStateType):mapStatePropsType =>({
 //let AuthRedirectComponent = WithAuthRedirect(MessageApi);
 //export  default connect(mapStateToProps) (AuthRedirectComponent);
 export  default compose(
-    connect (
+    //<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultRootState>
+    connect < mapStatePropsType, mapDispatchPropsType,  ownProps, AppStateType>(
         mapStateToProps,
         {addMessActionCreator, getProfileThunkCreator}),//2 export  default connect(mapStateToProps) (AuthRedirectComponent)
     WithAuthRedirect//1 WithAuthRedirect(MessageApi)

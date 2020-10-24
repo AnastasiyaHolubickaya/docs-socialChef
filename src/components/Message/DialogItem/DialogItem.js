@@ -1,3 +1,5 @@
+
+/*
 import React from "react";
 import classes from './DialogItem.module.css';
 import {NavLink} from "react-router-dom";
@@ -15,4 +17,4 @@ const DialogItem = (props) =>{
     return( <div>{dialog} </div> )
 
 };
-export  default  DialogItem;
+export default  DialogItem;*/

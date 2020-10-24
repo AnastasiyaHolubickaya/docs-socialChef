@@ -1,4 +1,4 @@
-
+/*
 import {addMessActionCreator} from "../../../redux/dialogReducer";
 import AddMessage from "./AddMessage";
 import {connect} from "react-redux";
@@ -21,7 +21,7 @@ const AddMessageContainer = connect(mapStateToProps,{addMessActionCreator, getPr
 
 export  default AddMessageContainer;
 
-/*
+
  const AddMessageContainer = (props) =>{
     //console.log(props)
     // let inputRef = React.createRef();

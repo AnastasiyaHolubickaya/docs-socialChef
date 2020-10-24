@@ -29,7 +29,7 @@ type mapDicpatchPropeType={
     getStatusThunkCreator:(userId:number)=>void
     updateStatusThunkCreator:(status:string)=>void
     updateProfilePhotoThunkCreator:(file:any)=>void
-    saveProfileThunkCreator:(profile:profileType)=>{resultCode:number}
+    saveProfileThunkCreator:(profile:profileType)=>void
 }
 type ownPropsType={
     match:any
@@ -87,7 +87,7 @@ let mapStateToProps = (state:AppStateType):mapStatePropsType  =>({
     friend: state.usersPage.friend
 });
 export  default compose(
-    connect(mapStateToProps,{getFollowedUsersThunkCreator, getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
+    connect<mapStatePropsType, mapDicpatchPropeType, ownPropsType, AppStateType>(mapStateToProps,{getFollowedUsersThunkCreator, getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
     withRouter
 )(ProfileAPI);
 

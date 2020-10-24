@@ -38,7 +38,7 @@ class ProfileStatus extends React.Component<propsType, stateType>{
     };
 
 //этот метод испольтзуем только с условием, иначе произойдет зацикливание программы (бесконечная перерисовка)
-    componentDidUpdate(prevProps:propsType, prevState:stateType, snapshot:any) {// перерисовка компоненты (обновление) -
+    componentDidUpdate(prevProps:propsType, prevState:stateType) {// перерисовка компоненты (обновление) -
         if (prevProps.status !== this.props.status){//если предыдущий статус не равен текущему статусу обновляем компоненту
             this.setState({
                 status: this.props.status

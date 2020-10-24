@@ -3,18 +3,12 @@ import './App.css';
 import './Media.css';
 import './Fonts.css';
 import Header from "./components/header/header";
-import News from "./components/news/news";
 import ProfileAPI from "./components/profile/profileAPI";
-
 import HomeApi from "./components/Home/HomeApi";
 import Register from "./components/Register/Register";
-import Recipes from "./components/Recipes/Recipes";
-import Universal from "./components/Universal/Universal";
 import Login from "./components/Login/Login";
-
 import {Route,  withRouter} from "react-router-dom";
 import AllUsersAPI from "./components/AllUsers/AllUsersAPI";
-//import MessageApi from "./components/Message/MessageApi";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {InitializationThunkCreator} from "./redux/appReducer";
@@ -47,17 +41,8 @@ class App extends Component {// делаем app классовой компон
                 <header><Header/></header>
 
                 <div className='content'>
-
-
-                        <Route  path='/recipes' render={() => <Recipes/>}/>
-                        <Route path='/news' render={() => <News/>}/>
                         <Route path='/dialogs' render={WithSuspense(MessageApi)}/>
                         <Route path='/register' render={() => <Register/>}/>
-                        <Route path='/soup' render={() => <Universal/>}/>
-                        <Route path='/meet' render={() => <Universal/>}/>
-                        <Route path='/fish' render={() => <Universal/>}/>
-                        <Route path='/bread' render={() => <Universal/>}/>
-                        <Route path='/cookis' render={() => <Universal/>}/>
                         <Route path='/profile/:userId?' render={() =>
                             <ProfileAPI//:userId? - добавляем параметр к пути, чтоб можно было его получить из match.params.userId
 

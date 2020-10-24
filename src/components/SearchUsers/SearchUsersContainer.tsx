@@ -11,7 +11,7 @@ type mapStatePropsType={
 type mapDispatchPropsType={
     getUsersSearchThunkCreator: (name:string)=>void
 }
-
+type ownProps={}
 let mapStateToProps = (state:AppStateType):mapStatePropsType => {
     return {
         users: state.usersPage.searchUsersForName
@@ -19,7 +19,7 @@ let mapStateToProps = (state:AppStateType):mapStatePropsType => {
 };
 
 
-const SearchUsersContainer = connect  (mapStateToProps,{getUsersSearchThunkCreator} )(SearchUsers);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
+const SearchUsersContainer = connect <mapStatePropsType, mapDispatchPropsType,ownProps,AppStateType> (mapStateToProps,{getUsersSearchThunkCreator} )(SearchUsers);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
 
 
 
