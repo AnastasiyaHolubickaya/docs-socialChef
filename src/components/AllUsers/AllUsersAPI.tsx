@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 
 import {
      followThunkCreator, getUsersThunkCreator,
-    setCurrentPage,
     unFollowThunkCreator
 } from "../../redux/usersReducer";
 import {
@@ -29,7 +28,7 @@ type MapStatePropsType ={
 }
 type MapDispatchPropsType ={
     getUsersThunkCreator:(currentPage:number,pageSize:number) => void
-    setCurrentPage:(pageNumber:number) => void
+    //setCurrentPage:(pageNumber:number) => void
     unFollowThunkCreator:(id:number) => void
     followThunkCreator:(id:number) => void
 }
@@ -44,7 +43,7 @@ class AllUsersAPI extends  React.Component<PropsType>{
         }
         onPageChange = (pageNumber:number) =>{
             const {pageSize} = this.props;
-            this.props.setCurrentPage(pageNumber);
+           // this.props.getCurrentPage(pageNumber);
             this.props.getUsersThunkCreator(pageNumber,pageSize );
         };
 
@@ -79,7 +78,7 @@ let mapStateToProps = (state:AppStateType):MapStatePropsType => {
 
 export default connect <MapStatePropsType, MapDispatchPropsType, OwnProps, AppStateType> (
     mapStateToProps,
-    {setCurrentPage,
+    {
         getUsersThunkCreator, followThunkCreator, unFollowThunkCreator}) (AllUsersAPI);
 
 /*

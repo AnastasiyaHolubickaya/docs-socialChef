@@ -27,6 +27,11 @@ let reducers = combineReducers(
 type RootReduserType = typeof reducers;//типизируем reducers
 export type AppStateType = ReturnType<RootReduserType>;//динамически достаем из функции то, что она возвращает - глобальный state
 
+//определяем типы actionCreater-ов с помощью TypeScript
+type PropertyTypes<T> = T extends {[key: string]: infer U} ?U : never
+export  type InferActionType<T extends {[key: string]:(...args:any[])=>any}> = ReturnType<PropertyTypes<T>>
+
+
 //комментарий ниже (@ts-ignore)говорит typescript у игнорировать строку под комментарием
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;//для подключения к проекту расширения REDUX для google chrom

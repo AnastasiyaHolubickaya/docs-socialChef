@@ -1,4 +1,3 @@
-import {HomeApi} from "../api/api";
 import photo1 from "../img/links/img.png";
 import photo2 from "../img/links/photo_2020-09-27_23-14-45.jpg";
 import photo3 from "../img/links/photo_2020-09-28_15-41-54.jpg";
@@ -12,6 +11,10 @@ import photo10 from "../img/links/photo_2020-10-23_11-26-56.jpg";
 import photo11 from "../img/links/photo_2020-10-23_11-32-08.jpg";
 import photo12 from "../img/links/photo_2020-10-23_11-43-42.jpg";
 import {newsType} from "./types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
+import {Dispatch} from "redux";
+import {HomeApi} from "../api/home_api";
 
 const SET_NEWS = 'SET_NEWS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -23,7 +26,6 @@ type initialStateType ={
     newsCount: number|null
     currentPage: number|null
 }
-
 
 let initialState:initialStateType = {
     news:[
@@ -47,7 +49,7 @@ let initialState:initialStateType = {
 
 type setNewsType ={
     type: typeof SET_NEWS
-    news:newsType
+    news:Array<newsType>
 }
 type setCurrentPageType ={
     type: typeof SET_CURRENT_PAGE
@@ -57,8 +59,11 @@ type setNewsCountType ={
     type: typeof SET_NEWS_COUNT
     newsCount:number
 }
+type actionsType = setNewsType | setCurrentPageType | setNewsCountType
+type thuncType = ThunkAction<Promise<void>,AppStateType,unknown, actionsType>
+type dispatchType= Dispatch<actionsType>
 
-const newsReducer =  (state = initialState, action:any):initialStateType => {
+const newsReducer =  (state = initialState, action:actionsType):initialStateType => {
     switch (action.type) {
         case SET_NEWS:
             return {
@@ -78,12 +83,12 @@ const newsReducer =  (state = initialState, action:any):initialStateType => {
     }
 
 };
-export const setNews = (news:newsType):setNewsType => ({type: SET_NEWS, news});
+export const setNews = (news:Array<newsType>):setNewsType => ({type: SET_NEWS, news});
  const setCurrentPage = (currentPage:number):setCurrentPageType => ({type: SET_CURRENT_PAGE, currentPage});
  const setNewsCount = (newsCount:number):setNewsCountType => ({type: SET_NEWS_COUNT, newsCount});
 
 
-export  const  getNewsThunkCreator = (currentPage:number,pageSize:number) => async (dispatch:any) => {
+export  const  getNewsThunkCreator = (currentPage:number,pageSize:number):thuncType => async (dispatch:dispatchType) => {
         dispatch(setCurrentPage(currentPage));
         let response = await  HomeApi.getNews(currentPage, pageSize);
     if(response.data.resultCode === 0) {

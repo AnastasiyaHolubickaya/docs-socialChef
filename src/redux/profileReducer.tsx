@@ -2,9 +2,12 @@ import face from "../img/hotpng.com (2).png";
 import img2 from "../img/links/photo_2020-09-27_22-49-04.jpg";
 import img1 from "../img/links/photo_2020-09-27_23-09-47.jpg";
 import img3 from "../img/links/photo_2020-09-27_23-14-45.jpg";
-import {profileApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {dataMyPostsType, photoType, profileType} from "./types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
+import {Dispatch} from "redux";
+import {profileApi} from "../api/profile_api";
 
 //reducer  - это функция, которая преобразовывает  state  через объект action ( у которого есть как минимум  type)
 //каждый reducer отвечает за свою часть стейта, получает   action, часть стейта
@@ -21,7 +24,6 @@ type initialStateType ={
     profile:any
     status:string
 }
-
 type addPostActionType={
     type: typeof ADD_POST
     post:string
@@ -42,8 +44,10 @@ type setphotoActionType={
     type: typeof SET_PHOTO
     photos:photoType
 }
-
-
+type actionsType= addPostActionType | setUsersProfileActionType | setStatusActionType | deletePostActionType | setphotoActionType
+type thuncType = ThunkAction<Promise<void>,AppStateType,unknown, actionsType>
+type dispatchType= Dispatch<actionsType>
+type getStateType=()=>AppStateType
 let initialState:initialStateType = {
     dataMyPosts:[
         {id: 1, img:img1, mess:"способ отложенной загрузки изображений для максимальной производительности.", link:"https://blog.prototyp.digital/best-way-to-lazy-load-images-for-maximum-performance", like:15},
@@ -56,9 +60,8 @@ let initialState:initialStateType = {
 
 };
 
-   const profileReducer =  (state = initialState, action:any):initialStateType => {
+   const profileReducer =  (state = initialState, action:actionsType):initialStateType => {
        // eslint-disable-next-line default-case
-
        switch (action.type) {
            case ADD_POST: {
                return {
@@ -88,34 +91,34 @@ export const deletePost = (id:number):deletePostActionType => ({type: DELETE_POS
 export const setPhoto = (photos:photoType):setphotoActionType => ({type: SET_PHOTO, photos});
 
 // thunk
-export  const  getProfileThunkCreator = (userId:number) => async (dispatch:any) => {
-   let response = await profileApi.getProfile(userId);
-        dispatch(setUsersProfile(response.data));
+export  const  getProfileThunkCreator = (userId:number|null):thuncType => async (dispatch:dispatchType) => {
+   let profileData = await profileApi.getProfile(userId);
+        dispatch(setUsersProfile(profileData));
 };
-export  const  getStatusThunkCreator = (userId:number) => async (dispatch:any) => {//5
+export  const  getStatusThunkCreator = (userId:number):thuncType => async (dispatch:dispatchType) => {//5
     let response = await profileApi.getStatus(userId);
         dispatch(setStatus(response.data));
 };
-export  const  updateStatusThunkCreator = (status:string) => async (dispatch:any) => {
+export  const  updateStatusThunkCreator = (status:string):thuncType => async (dispatch:dispatchType) => {
     try {
-        const response = await profileApi.updateStatus(status);
-        if(response.data.resultCode === 0)
+        const updateStatusData = await profileApi.updateStatus(status);
+        if(updateStatusData.resultCode === 0)
             dispatch(setStatus(status));
     } catch (e) {
     }
 };
-export  const  updateProfilePhotoThunkCreator = (file:any) => async (dispatch:any) => {
-    let response = await profileApi.addPhoto(file);
-        if(response.data.resultCode === 0)
-            dispatch(setPhoto(response.data.data.photos));
+export  const  updateProfilePhotoThunkCreator = (file:any):thuncType => async (dispatch:dispatchType) => {
+    let photoData = await profileApi.addPhoto(file);
+        if(photoData.resultCode === 0)
+            dispatch(setPhoto(photoData.data));
 };
-export  const  saveProfileThunkCreator = (profile:profileType) => async (dispatch:any, getState:any) => {
+export  const  saveProfileThunkCreator = (profile:profileType):thuncType => async (dispatch:any, getState:getStateType) => {
     const  userId = getState().auth.userId;// достаем из стейта текущего пользователя
-   const response = await profileApi.saveProfile(profile);
-        if(response.data.resultCode === 0){
+   const saveProfileData = await profileApi.saveProfile(profile);
+        if(saveProfileData.resultCode === 0){
             dispatch(getProfileThunkCreator(userId));
         } else {
-            let message = response.data.messages.length >0 ? response.data.messages[0] : " Ошибка";
+            let message = saveProfileData.messages.length >0 ? saveProfileData.messages[0] : " Ошибка";
             dispatch(stopSubmit("profile",{_error: message}));// stopSubmit() - это action creator из redux form , останавливает отправку формы в скабках указываем какую именно форму останавливаем (name)
             return  Promise.reject({_error: message})// для остановки отправки формы в случае ошибки
         }

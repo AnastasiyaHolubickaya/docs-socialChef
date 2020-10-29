@@ -1,11 +1,7 @@
 import face from "../img/icons/user.jpg";
-import {dataUsersType, usersType} from "./types/types";
-
-
-
+import {dataUsersType} from "./types/types";
 
 const ADD_MESS = 'ADD-MESS';
-
 
 type initialStateType = {
     dataDialogs:Array<dataUsersType>
@@ -37,7 +33,6 @@ let initialState:initialStateType = {
                  dataDialogs: [...state.dataDialogs, {photos:{small:action.photo}, mess: action.message,  name:action.login, id: action.userId}]
              };
              // dataDialogs: [...state.dataDialogs - глубоко копируем только то, что будем менять
-
          default:
              return state;
      }
