@@ -29,14 +29,14 @@ export type dataUsersType ={
     mess: string|null
 }
 export type contactsType = {
-    facebook:string|null
-    website:string|null
-    vk:string|null
-    twitter:string|null
-    instagram:string|null
-    youtube:string|null
-    github:string|null
-    mainLink:string|null
+    facebook:string
+    website:string
+    vk:string
+    twitter:string
+    instagram:string
+    youtube:string
+    github:string
+    mainLink:string
 }
 
 export type profileType ={

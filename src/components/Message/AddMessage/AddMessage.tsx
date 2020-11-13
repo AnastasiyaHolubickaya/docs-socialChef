@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./AddMessage.module.css";
 import Users from "../Users/Users";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, requiredField} from "../../../utils/validation/validator";
 import {Textarea} from "../../commons/FormControls/FormControls";
 import Button from "../../Button/Button";
@@ -11,16 +11,19 @@ type propsType={
     dataDialogs: Array<dataUsersType>
     login: string|null
     userId: number|null
-    profile: profileType
+    profile: profileType|null
     addMessActionCreator:(message:string|null, login:string|null, photo:string, userId:number)=>void
     getProfileThunkCreator:(userId:number)=>void
 }
-type messFormPropsType={
-    handleSubmit:any
+
+type formDataType={
+    message: string
+    login: string
+    profile: profileType|null
 }
 const maxLength300 = maxLengthCreator(100);
 
-const MessageForm:React.FC<messFormPropsType> = ({handleSubmit}) =>{
+const MessageForm:React.FC<InjectedFormProps<formDataType>> = ({handleSubmit}) =>{
     return(
         <form onSubmit={handleSubmit}>
             <div><Field name={'message'} placeholder={'message'} component={Textarea} validate={[requiredField, maxLength300]}/></div>
@@ -28,7 +31,7 @@ const MessageForm:React.FC<messFormPropsType> = ({handleSubmit}) =>{
         </form>
     )
 };
-const MessageReduxForm = reduxForm({//контейнерная компонента,создается редаксформ над презентационной компонентой
+const MessageReduxForm = reduxForm<formDataType>({//контейнерная компонента,создается редаксформ над презентационной компонентой
     // a unique name for the form
     //каждая форма должна иметь уникальное строковое имя (для распознавания ее редаксформом)
     form: 'message'//form: - это название не связано с form из store.ts
@@ -36,15 +39,13 @@ const MessageReduxForm = reduxForm({//контейнерная компонен�
 
 
 class AddMessage extends  React.Component<propsType> {
-    //
     componentDidMount(){
        this.props.getProfileThunkCreator(this.props.userId as number);
     }
-
-    onSubmit = (formData:any) => {// сюда придут данные их формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
-       this.props.addMessActionCreator(formData.message,this.props.login, this.props.profile.photos.small as string, this.props.profile.userId);
+    onSubmit = (formData:formDataType) => {// сюда придут данные их формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
+        // @ts-ignore
+        this.props.addMessActionCreator(formData.message,this.props.login, this.props.profile.photos.small as string, this.props.profile.userId);
     };
-
 
     render() {
         return(
@@ -54,11 +55,9 @@ class AddMessage extends  React.Component<propsType> {
                 <MessageReduxForm onSubmit = {this.onSubmit}/>
             </div>
         )
-
     }
-
-
 }
+
 export  default  AddMessage;
 
 /*const AddMessage = (props) =>{

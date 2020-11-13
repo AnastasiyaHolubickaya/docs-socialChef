@@ -1,7 +1,7 @@
 import React from "react";
 import classes from './Login.module.css';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";//инсталируем redux form - npm install redux-form   в store.ts комбайним редаксовский редьюсер
-import {CreateField, Input} from "../commons/FormControls/FormControls";
+import {CreateField, getStringKeys, Input} from "../commons/FormControls/FormControls";
 import {maxLengthCreator, requiredField} from "../../utils/validation/validator";
 import {connect} from "react-redux";
 import { LoginThunkCreator} from "../../redux/authReducer"
@@ -68,7 +68,7 @@ type formDataType={
     password: string
     email: string
 }
-type formDataKeysProps= Extract <keyof formDataType, string>// получаем объект ключей ( Extract - означает берем только (в нашем случае) string):  captchaUrl,rememberMe,password,email. (урок 8 (2), время 1.08.58))
+type formDataKeysProps= getStringKeys <formDataType>// получаем объект ключей ( Extract - означает берем только (в нашем случае) string):  captchaUrl,rememberMe,password,email. (урок 8 (2), время 1.08.58))
 const Login:React.FC<propsType> = ({isAuth, captchaUrl, LoginThunkCreator}) =>{
     const onSubmit = (formData:formDataType) => {// сюда придут данные из формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
         //console.log(formData);

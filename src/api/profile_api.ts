@@ -1,17 +1,17 @@
 import {photoType, profileType} from "../redux/types/types";
-import {instance, responseType, resultCodeEnum} from "./api";
+import {instance, ResponseType, resultCodeEnum} from "./api";
 
 export const profileApi = {
     getProfile(userId: number | null) {
         return instance.get<profileType>(`profile/` + userId).then(res => res.data);
     },
     getStatus(userId: number) {
-        return instance.get(`profile/status/` + userId);
+        return instance.get<string>(`profile/status/` + userId);
     },
     updateStatus(status: string) {
         //отправляем на сервер объект у которого есть свойство status: (эти данные
         // берем из API документации, которую нам должен предоставить backend разработчик
-        return instance.put<responseType>(`profile/status/`, {status: status}).then(res => res.data);
+        return instance.put<ResponseType>(`profile/status/`, {status: status}).then(res => res.data);
     },
     addPhoto(file: any) {
         //отправляем на сервер объект у которого есть свойство status: (эти данные
@@ -26,7 +26,7 @@ export const profileApi = {
 
     },
     saveProfile(profile: profileType) {
-        return instance.put<responseType>(`profile/`, profile).then(res => res.data);
+        return instance.put<ResponseType>(`profile/`, profile).then(res => res.data);
     },
 };
 type updatePhotoType = {

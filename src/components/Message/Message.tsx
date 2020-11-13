@@ -8,7 +8,7 @@ type propsType={
     dataDialogs: Array<dataUsersType>
     login: string|null
     userId: number|null
-    profile: profileType
+    profile: profileType|null
     addMessActionCreator:(message:string|null, login:string|null, photo:string, userId:number)=>void
     getProfileThunkCreator:(userId:number)=>void
 }

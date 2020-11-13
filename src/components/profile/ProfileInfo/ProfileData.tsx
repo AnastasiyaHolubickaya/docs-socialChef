@@ -9,7 +9,7 @@ import vk from "../../../img/social_icons/vk_101783.svg";
 import Button from "../../Button/Button";
 import cn from "classnames";
 import styled from "styled-components";
-import {profileType} from "../../../redux/types/types";
+import {contactsType, profileType} from "../../../redux/types/types";
 
 type propsType={
     profile: profileType
@@ -40,7 +40,7 @@ const massIcon = [
 ];
 
  // @ts-ignore
-const ViewSocialIcons:React.FC<ViewSocialIconsPropsType> = ({title, value}) => {
+const ViewSocialIcons:React.FC<ViewSocialIconsPropsType> = ({title, value }) => {
     return  massIcon.map(item =>
         (item.name === title)
             && <div key = {item.id}> <img src={item.src} alt={""}/> <b><StyledLink target="_blank" href={value}> {value} </StyledLink> </b></div>
@@ -71,8 +71,8 @@ const ProfileData:React.FC<propsType> = ({profile, clickUserId, activeEditeMode}
                     <div className={classes.socialIcons}>
                         {
                             Object.keys(profile.contacts).map(key =>
-                                    // @ts-ignore
-                                (profile.contacts[key] !== "" && profile.contacts[key] != null )&& <ViewSocialIcons key={key} title = {key} value = {profile.contacts[key]} />
+
+                                (profile.contacts[key as keyof contactsType] !== "" && profile.contacts[key as keyof contactsType] != null )&& <ViewSocialIcons key={key} title = {key} value = {profile.contacts[key as keyof contactsType] } />
                                 )
                         }
                     </div>
@@ -82,4 +82,4 @@ const ProfileData:React.FC<propsType> = ({profile, clickUserId, activeEditeMode}
     )
 };
 
-export  default  ProfileData;
+export  default  ProfileData;// @ts-ignore

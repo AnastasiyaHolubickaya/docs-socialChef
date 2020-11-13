@@ -13,13 +13,22 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {InitializationThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/Preloader/Preloader";
-import {WithSuspense} from "./hoc/WithSuspense";// hook
+import {WithSuspense} from "./hoc/WithSuspense";
+import {AppStateType} from "./redux/store";
+// hook
 
 const MessageApi = React.lazy(() => import('./components/Message/MessageApi'));
 
-class App extends Component {// делаем app классовой компонентой, т к нам нужен жизненный цикл componentDidMount
+type mapStatePropsType= ReturnType<typeof mapStateToProps>
+type mapDispatchPropsType={
+    InitializationThunkCreator:()=>void
+}
 
-    catchAllUnhandledErrors=(promiseRejectionEvent) => {// глобальный перехват ошибок, либо локально try catch
+const Chat = WithSuspense(MessageApi);
+
+class App extends Component<mapDispatchPropsType& mapStatePropsType> {// делаем app классовой компонентой, т к нам нужен жизненный цикл componentDidMount
+
+    catchAllUnhandledErrors=(promiseRejectionEvent:PromiseRejectionEvent) => {// глобальный перехват ошибок, либо локально try catch
         console.log(promiseRejectionEvent);
     };
 
@@ -35,32 +44,25 @@ class App extends Component {// делаем app классовой компон
         if(!this.props.initialization){
             return <Preloader/>
         }
+
+
         return (
 
             <div className="App">
                 <header><Header/></header>
-
                 <div className='content'>
-                        <Route path='/dialogs' render={WithSuspense(MessageApi)}/>
+                        <Route path='/dialogs' render={() => <Chat/>}/>
                         <Route path='/register' render={() => <Register/>}/>
-                        <Route path='/profile/:userId?' render={() =>
-                            <ProfileAPI//:userId? - добавляем параметр к пути, чтоб можно было его получить из match.params.userId
-
-                            />}/>
+                        <Route path='/profile/:userId?' render={() => <ProfileAPI/>}/>
                         <Route path='/login' render={() => <Login/>}/>
                         <Route path='/users' render={() => <AllUsersAPI/>}/>
-
-                         <Route exact path='/' render={() => <HomeApi/>}/>
-
+                        <Route exact path='/' render={() => <HomeApi/>}/>
                 </div>
-
-                {/*<Profile/>*/}
             </div>
-
         );
     }
 }
-const mapStateToProps=(state) => ({
+const mapStateToProps=(state:AppStateType) => ({
     initialization: state.app.initialization
 });
 
@@ -69,7 +71,7 @@ const mapStateToProps=(state) => ({
 export default compose (
     withRouter,
     connect (mapStateToProps, {InitializationThunkCreator})
-)( App);
+)( App)as React.ComponentType;
 
 /*со <Switch/> не работает переход - в адресной строке меняется адрес а перехода на страницу не происхоит
 // <Switch/> нужен для распознавания более уточненных адресов, например
@@ -88,5 +90,5 @@ export default compose (
                 dataMyPosts = {props.state.profile.dataMyPosts}
                   dispatch = {props.dispatch}
                   newText = {props.state.profile.newText}
-
+//:userId? - добавляем параметр к пути, чтоб можно было его получить из match.params.userId
  */

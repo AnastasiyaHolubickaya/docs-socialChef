@@ -1,21 +1,21 @@
-import React, {FunctionComponent} from "react";
+import React from "react";
 import classes from "./ProfileDataForm.module.css";
 import {Input, Textarea} from "../../commons/FormControls/FormControls";
 import {maxLengthCreator, requiredField} from "../../../utils/validation/validator";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import Button from "../../Button/Button";
 import {profileType} from "../../../redux/types/types";
 
-type profileFormPropsType={
-    handleSubmit:any
+
+type ownPropsType={
     profile:profileType
-    error:string
 }
+
 
 const maxLength20 = maxLengthCreator(20);
 const maxLength200 = maxLengthCreator(200);
 
-const ProfileForm:React.FC<profileFormPropsType> = ({handleSubmit, profile, error}) => {
+const ProfileForm:React.FC<InjectedFormProps<profileType, ownPropsType> & ownPropsType> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit} className={classes.profileForm} >
                 <span className={classes.spanForm}> Редактирование профиля</span>
@@ -56,9 +56,9 @@ const ProfileForm:React.FC<profileFormPropsType> = ({handleSubmit, profile, erro
 };
 
 
-const ProfileDataReduxForm = reduxForm<profileFormPropsType>({
+const ProfileDataReduxForm = reduxForm<profileType, ownPropsType>({
         form: 'profile'//form: - это название не связано с form из store.ts
-    })(ProfileForm as FunctionComponent);//-ется редаксформ над презентационной компонентой
+    })(ProfileForm);//-ется редаксформ над презентационной компонентой
 
 
 export  default ProfileDataReduxForm;

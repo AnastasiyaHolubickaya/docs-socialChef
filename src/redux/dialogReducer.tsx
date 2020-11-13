@@ -1,18 +1,12 @@
 import face from "../img/icons/user.jpg";
 import {dataUsersType} from "./types/types";
+import {InferActionType} from "./store";
 
-const ADD_MESS = 'ADD-MESS';
 
 type initialStateType = {
     dataDialogs:Array<dataUsersType>
 }
-type actionType={
-    type: typeof ADD_MESS
-    message: string|null
-   photo:string|null
-    login: string|null
-    userId: number|null
-}
+type ActionsType=InferActionType<typeof actionsDialog>;
 
 let initialState:initialStateType = {
     dataDialogs: [
@@ -24,10 +18,9 @@ let initialState:initialStateType = {
     ]
 };
 
-
- const dialogReducer =  (state = initialState, action:actionType):initialStateType => {
+ const dialogReducer =  (state = initialState, action:ActionsType):initialStateType => {
      switch (action.type) {
-         case  ADD_MESS:
+         case  "ADD_MESS":
              return {//делаем копию объекта, т.к. не имеет право менять state напрямую, и сразу возвращаем его
                  ...state,
                  dataDialogs: [...state.dataDialogs, {photos:{small:action.photo}, mess: action.message,  name:action.login, id: action.userId}]
@@ -36,13 +29,11 @@ let initialState:initialStateType = {
          default:
              return state;
      }
-
-
-
 };
-export const addMessActionCreator =(message:string|null, login:string|null, photo:string, userId:number):actionType=> ({type: ADD_MESS, login,message,photo,userId});// если функция только возвращает  можно не ставить return
 
-
+ export const actionsDialog={
+     addMessActionCreator:(message:string|null, login:string|null, photo:string, userId:number)=> ({type: "ADD_MESS", login,message,photo,userId} as const)
+};
 
 export default dialogReducer;
 

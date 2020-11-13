@@ -1,15 +1,10 @@
-import { instance, resultCodeEnum} from "./api";
+import { instance, ResponseType} from "./api";
 import {usersType} from "../redux/types/types";
 
  type getUsersType={
     items: Array<usersType>
     totalCount:number
     error:string
-}
- type followUnfollowType={
-    data:{}
-    resultCode: resultCodeEnum
-    messages: Array<string>
 }
 
 export const usersApi = {
@@ -32,13 +27,13 @@ export const usersApi = {
             })
     },
     unSubscribeUsers(usersId: number) {
-        return instance.delete<followUnfollowType>(`follow/${usersId}`)
+        return instance.delete<ResponseType>(`follow/${usersId}`)
             .then(res => {
                 return res.data
             })
     },
     subscribeUsers(usersId: number) {
-        return instance.post<followUnfollowType>(`follow/${usersId}`)
+        return instance.post<ResponseType>(`follow/${usersId}`)
             .then(res => {
                 return res.data
             })

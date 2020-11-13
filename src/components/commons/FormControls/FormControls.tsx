@@ -29,7 +29,7 @@ export  const Input:React.FC<WrappedFieldProps> = (props) => {//rest-опера�
     return <FormControl {...props}> <input {...input} {...restprops}  className={classes.input}/></FormControl>
 
 };
-
+export  type getStringKeys<T> = Extract<keyof T, string>
 //собственная функция-шаблон для отрисовки полей формы
 export function CreateField<formKeysType extends string>(placeholder: string|undefined,
                                                          name:formKeysType,

@@ -4,7 +4,12 @@
 import React, {useEffect, useState} from "react";
 import classes from './ProfileInfo.module.css';
 
-const ProfileStatusHook = (props) => {
+type propsType={
+    status: string
+    clickUserId:boolean
+    updateStatus:(status:string)=>void
+}
+const ProfileStatusHook = (props:propsType) => {
 // hook useState возвращает массив из двух элементов (state хранится не в самой функции, а где то в React   )
 //делаем деструктуризированное присваивание (*)
 
@@ -15,14 +20,13 @@ const ProfileStatusHook = (props) => {
         setStatus (props.status);
         },[props.status]);//[props.status] зависимость (если не поставить зависимость - useEffect будет выполняться после каждой отрисовки компоненты - произойдет зацикливание, если оставить зависимость пустой - []- react точно не будет знать от чего зависит давнный useEffect - так делать не рекомендуется)
 // в данном случае зависит от  пропсов (точнее статуса пришедшего в пропсах) поэтому срабатывать он будет при изменении статуса в пропсах
-    const onStatusChange = (e) => {
+    const onStatusChange = (e:any) => {
         setStatus(e.currentTarget.value)
         };
     const activeEditeMode = () =>{
         if(props.clickUserId)
        { setEditMode(true)}
     };
-
     const deActivateEditMode =() => {
         setEditMode(false);
         props.updateStatus(status);
@@ -33,10 +37,7 @@ const ProfileStatusHook = (props) => {
     let editMode = mass[0];// первый элемент массива -  наш закинутый false
     let setEditMode = mass[1];//второй элемент массива - функция, которая может изменять (устанавливать значение)первый элемент
     */
-
-
         return(
-
             <div className=''>
                 { !editMode &&
                     <span className={classes.span} onDoubleClick={activeEditeMode}>... {props.status || 'no status'}</span>
@@ -44,13 +45,10 @@ const ProfileStatusHook = (props) => {
                 {  editMode &&
                     <input onChange={onStatusChange} onBlur={deActivateEditMode} autoFocus={true} type='text' value={status}/>
                 }
-
-
             </div>
-
         )
     };
 
 
 
-export  default  ProfileStatusHook;
+export  default ProfileStatusHook;

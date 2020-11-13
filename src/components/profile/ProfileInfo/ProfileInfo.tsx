@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import classes from './ProfileInfo.module.css';
 import Preloader from "../../Preloader/Preloader";
 import face from "../../../img/icons/user.jpg";
@@ -8,13 +8,14 @@ import ProfileDataReduxForm from "./ProfileDataForm";
 import {profileType} from "../../../redux/types/types";
 
 type propsType={
-    profile: profileType
-    status: string|null
+    profile: profileType|null
+    status: string
     updateStatus:(status:string)=>void
     clickUserId:boolean
-    savePhoto:(file:any)=>void
+    savePhoto:(file:File)=>void
     saveProfile:(profile:profileType)=>void
 }
+
 
 const ProfileInfo:React.FC<propsType> = ({profile, status, updateStatus,clickUserId,savePhoto, saveProfile }) =>{
 
@@ -28,16 +29,14 @@ const ProfileInfo:React.FC<propsType> = ({profile, status, updateStatus,clickUse
     if(!profile){
         return <Preloader/>
     }
-    const PhotoSelected = (e:any) => {
-        if (e.target.files.length){
+    const PhotoSelected= (e:ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length){//e.target.files? если files есть, берем доину
             savePhoto (e.target.files[0])
         }
     };
-    const onSubmit = async (formData:any) => {// сюда придут данные из формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
+    const onSubmit = async (formData:profileType) => {// сюда придут данные из формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
          await  saveProfile(formData);// для остановки отправки формы в случае ошибки
             deActivateEditMode();
-
-
     };
 
     return(
@@ -45,18 +44,16 @@ const ProfileInfo:React.FC<propsType> = ({profile, status, updateStatus,clickUse
                     <div className={classes.itemImg}>
                         <img src={profile.photos.large||face} alt="фото пользователя"/>
                             {
-                               ( clickUserId ) && <label className={classes.input_btn} htmlFor="input__file" onChange={PhotoSelected}><input  id="input__file"   type ="file"/> загрузить фото </label>
+                               ( clickUserId ) && <label className={classes.input_btn} htmlFor="input__file" ><input  id="input__file"  onChange={PhotoSelected} type ="file"/> загрузить фото </label>
                             }
                     </div>
                     <div className={classes.itemInfo}>
                             <ProfileStatusHook
                                 status={status}
                                 updateStatus={updateStatus}
-                                profile = {profile}
                                 clickUserId = {clickUserId}
                             />
                             { editMode
-                                // @ts-ignore
                                 ? <ProfileDataReduxForm profile = {profile} onSubmit = {onSubmit} initialValues = {profile}
                                 />
                                 : <ProfileData profile = {profile}

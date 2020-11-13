@@ -1,6 +1,6 @@
 
 import MyPosts from "./myPosts";
-import {addPostActionCreator} from "../../../redux/profileReducer";
+import {actionsProfile} from "../../../redux/profileReducer";
 import {connect} from "react-redux";
 import {dataMyPostsType} from "../../../redux/types/types";
 import {AppStateType} from "../../../redux/store";
@@ -11,6 +11,7 @@ type mapStatePropsType={
 type mapDispatchPropsType={
     addPostActionCreator:(post:string)=>void
 }
+const addPostActionCreator = actionsProfile.addPostActionCreator;
 
 let mapStateToProps = (state:AppStateType):mapStatePropsType => ({
         dataMyPosts: state.profile.dataMyPosts

@@ -21,5 +21,10 @@ export type responseType={
     resultCode: resultCodeEnum
     messages: Array<string>
 }
-
+//создаем обобщенный тип (generic),  который можно уточнить
+export type ResponseType<D={}, RC=resultCodeEnum>={
+    data:D
+    messages: Array<string>
+    resultCode:RC
+}
 

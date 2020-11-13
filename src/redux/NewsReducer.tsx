@@ -11,23 +11,18 @@ import photo10 from "../img/links/photo_2020-10-23_11-26-56.jpg";
 import photo11 from "../img/links/photo_2020-10-23_11-32-08.jpg";
 import photo12 from "../img/links/photo_2020-10-23_11-43-42.jpg";
 import {newsType} from "./types/types";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./store";
-import {Dispatch} from "redux";
+import { BaseThuncType, InferActionType} from "./store";
 import {HomeApi} from "../api/home_api";
+import {FormAction} from "redux-form";
 
-const SET_NEWS = 'SET_NEWS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_NEWS_COUNT = 'SET_NEWS_COUNT';
 
-type initialStateType ={
-    news: Array<newsType>
-    pageSize: number|null
-    newsCount: number|null
-    currentPage: number|null
-}
 
-let initialState:initialStateType = {
+
+export type initialStateType  = typeof initialState;
+type ActionsType= InferActionType<typeof actions>;
+type ThuncType = BaseThuncType<ActionsType| FormAction>
+
+let initialState = {
     news:[
         {id:1, title:"Тестовые Email и Password", img:photo7, description:"логин и пароль для тестирования приложения ", link:""},
         {id:2, title:"как должны работать модальные окна", img:photo9, description:"В этом материале автор постарался собрать максимально полный свод правил, рекомендаций и примеров реализации по которым модальные окна должны работать ", link:"https://habr.com/ru/post/521422"},
@@ -41,59 +36,42 @@ let initialState:initialStateType = {
         {id:10, title:"Каркасные экраны: реализация в React", img:photo8, description:" На смену лоадерам пришли \"каркасные\" экраны (skeleton screens), которые не просто \"тянут время\", но и лучше обозначают прогресс загрузки, уменьшая негативные ощущения юзера (loading-time frustration). Другими словами, создают иллюзию того, что контент вот-вот появится.", link:"https://proglib.io/p/karkasnye-ekrany-realizaciya-v-react-2020-10-07"},
         {id:11, title:"npmx - продвинутый CLI интерфейс для npm", img:photo11, description:"", link:"https://github.com/terminal-junkies/npmx"},
         {id:12, title:"Сделайте ваше PWA больше похожим на приложение", img:photo12, description:"Сделайте свое прогрессивное веб-приложение не похожим на веб-сайт, а похожим на  приложение", link:"https://web.dev/app-like-pwas"},
-    ],
+    ] as Array<newsType>,
     pageSize: 6,
     newsCount: 0,
     currentPage: 1
 };
 
-type setNewsType ={
-    type: typeof SET_NEWS
-    news:Array<newsType>
-}
-type setCurrentPageType ={
-    type: typeof SET_CURRENT_PAGE
-    currentPage:number
-}
-type setNewsCountType ={
-    type: typeof SET_NEWS_COUNT
-    newsCount:number
-}
-type actionsType = setNewsType | setCurrentPageType | setNewsCountType
-type thuncType = ThunkAction<Promise<void>,AppStateType,unknown, actionsType>
-type dispatchType= Dispatch<actionsType>
-
-const newsReducer =  (state = initialState, action:actionsType):initialStateType => {
+const newsReducer =  (state = initialState, action:ActionsType):initialStateType => {
     switch (action.type) {
-        case SET_NEWS:
+        case "SET_NEWS":
             return {
                 ...state,
                 news: action.news
             };
-        case SET_CURRENT_PAGE:
+        case "SET_CURRENT_PAGE":
             return {
                 ...state, currentPage: action.currentPage
             };
-        case SET_NEWS_COUNT:
+        case "SET_NEWS_COUNT":
             return {
                 ...state, newsCount: action.newsCount
             };
         default:
             return state;
     }
-
 };
-export const setNews = (news:Array<newsType>):setNewsType => ({type: SET_NEWS, news});
- const setCurrentPage = (currentPage:number):setCurrentPageType => ({type: SET_CURRENT_PAGE, currentPage});
- const setNewsCount = (newsCount:number):setNewsCountType => ({type: SET_NEWS_COUNT, newsCount});
-
-
-export  const  getNewsThunkCreator = (currentPage:number,pageSize:number):thuncType => async (dispatch:dispatchType) => {
-        dispatch(setCurrentPage(currentPage));
+const actions={
+    setNews: (news:Array<newsType>) => ({type: "SET_NEWS", news} as const),
+    setCurrentPage: (currentPage:number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
+    setNewsCount: (newsCount:number) => ({type: "SET_NEWS_COUNT", newsCount} as const),
+};
+export  const  getNewsThunkCreator = (currentPage:number,pageSize:number):ThuncType => async (dispatch) => {
+        dispatch(actions.setCurrentPage(currentPage));
         let response = await  HomeApi.getNews(currentPage, pageSize);
     if(response.data.resultCode === 0) {
-        dispatch(setNews(response.items));
-        dispatch(setNewsCount(response.totalCount));
+        dispatch(actions.setNews(response.items));
+        dispatch(actions.setNewsCount(response.totalCount));
     }
         };
 

@@ -1,9 +1,9 @@
 import {updateMass} from "../utils/mapingState";
 import {usersType} from "./types/types";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType, InferActionType} from "./store";
+import { InferActionType, BaseThuncType} from "./store";
 import {Dispatch} from "redux";
 import {usersApi} from "../api/users_api";
+import {ResponseType} from "../api/api";
 
 /*
 const FOLLOW = 'FOLLOW';
@@ -30,7 +30,8 @@ let initialState = {
     isFetching: false,//  приставка is для названия переменных с булевым значением: true/false
     isFollowingProgress: [] as Array<number>//массив id пользователей
 };
-type initialState  = typeof initialState;
+export type initialState  = typeof initialState;
+
 const usersReducer =  (state = initialState, action:ActionsType):initialState=> {
     switch (action.type) {
 
@@ -103,7 +104,7 @@ export const actions={
 //делаем thunc - функция котоая диспатчит action creaters если санке нужны какие-то данные, оборачиваем ее
 // в функцию высшего порядка ThuncCreater (может принимать данные и возвращает Thunc)
 // и в нее передаем неолбходимые данные
-type thuncType = ThunkAction<Promise<void>,AppStateType,unknown, ActionsType>
+type thuncType = BaseThuncType<ActionsType>
 type dispatchType= Dispatch<ActionsType>
 
 export  const  getUsersThunkCreator = (currentPage:number,
@@ -127,7 +128,10 @@ export  const  getFollowedUsersThunkCreator = (friend:boolean):thuncType => asyn
 //т к в санках follow/unfollow есть дублирующийся код, делаем рефакторинг ,
 // для этого создаем универсальную функцию
 // а затем ее уже будем вызывать в санках
-    const followUnfollow = async (dispatch:dispatchType, id:number, apiMethod:any, actionCreator:(id:number)=> ActionsType) => {
+    const followUnfollow = async (dispatch:dispatchType,
+                                  id:number,
+                                  apiMethod:(usersId: number)=>Promise<ResponseType>,
+                                  actionCreator:(id:number)=> ActionsType) => {
         dispatch(actions.setToggleIsFollowing(true, id));
         let data = await apiMethod(id);
         if(data.resultCode === 0){
@@ -137,12 +141,12 @@ export  const  getFollowedUsersThunkCreator = (friend:boolean):thuncType => asyn
     };
     export  const  followThunkCreator = (id:number):thuncType => {
         return async (dispatch) => {
-            followUnfollow(dispatch, id, usersApi.subscribeUsers.bind(usersApi), actions.follow);
+           await followUnfollow(dispatch, id, usersApi.subscribeUsers.bind(usersApi), actions.follow);
         }
     };
     export  const  unFollowThunkCreator = (id:number):thuncType => {
         return async (dispatch) => {
-            followUnfollow(dispatch, id, usersApi.unSubscribeUsers.bind(usersApi), actions.unfollow);
+          await  followUnfollow(dispatch, id, usersApi.unSubscribeUsers.bind(usersApi), actions.unfollow);
         }
 };
 

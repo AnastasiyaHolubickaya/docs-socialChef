@@ -1,9 +1,9 @@
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {Action, applyMiddleware, combineReducers, compose, createStore} from "redux";
 import profileReducer from "./profileReducer";
 import dialogReducer from "./dialogReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
-import thunkMiddleware from "redux-thunk";
+import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./appReducer";
 import menuReducer from "./menuReducer";
@@ -30,7 +30,8 @@ export type AppStateType = ReturnType<RootReduserType>;//динамически 
 //определяем типы actionCreater-ов с помощью TypeScript
 type PropertyTypes<T> = T extends {[key: string]: infer U} ?U : never
 export  type InferActionType<T extends {[key: string]:(...args:any[])=>any}> = ReturnType<PropertyTypes<T>>
-
+//тип санок
+export type BaseThuncType<AT extends Action, TH=Promise<void> >= ThunkAction<TH,AppStateType, unknown, AT>
 
 //комментарий ниже (@ts-ignore)говорит typescript у игнорировать строку под комментарием
 //@ts-ignore

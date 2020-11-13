@@ -1,4 +1,3 @@
-
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
@@ -8,62 +7,57 @@ import {
     updateProfilePhotoThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profileReducer";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {getFollowedUsersThunkCreator} from "../../redux/usersReducer";
 import {profileType, usersType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/store";
 
 type mapStatePropsType={
-    profile: profileType
-    status: string|null,
+    profile: profileType|null
+    status: string,
     userId: number|null,
     isAuth: boolean,
     usersFollowed:Array<usersType>
     friend:boolean
 }
-
 type mapDicpatchPropeType={
     getFollowedUsersThunkCreator:(friend:boolean)=>void
     getProfileThunkCreator:(userId:number)=>void
     getStatusThunkCreator:(userId:number)=>void
     updateStatusThunkCreator:(status:string)=>void
-    updateProfilePhotoThunkCreator:(file:any)=>void
+    updateProfilePhotoThunkCreator:(file:File)=>void
     saveProfileThunkCreator:(profile:profileType)=>void
 }
-type ownPropsType={
-    match:any
+type PathParamsType={
+    userId:string
 }
-type propsType= mapStatePropsType & mapDicpatchPropeType & ownPropsType;
-
+type propsType= mapStatePropsType & mapDicpatchPropeType & RouteComponentProps<PathParamsType>;
 
 
 class ProfileAPI extends  React.Component<propsType>{
     refresh() {
         //получаем id юзера из url (.../profile/1100)
-        let userId = this.props.match.params.userId;// match относится к компоненте withRouter , через него узнаем id кликнутого пользователя match.params.userId
+        let userId: number|null = +this.props.match.params.userId;// match относится к компоненте withRouter , через него узнаем id кликнутого пользователя match.params.userId
         if (!userId){
             userId = this.props.userId;
             if(!userId){
-                // @ts-ignore
                 this.props.history.push('/login');// програмный редирект
             }
         }
-        this.props.getProfileThunkCreator(userId);
-        this.props.getStatusThunkCreator (userId);
+        this.props.getProfileThunkCreator(userId as number);
+        this.props.getStatusThunkCreator (userId  as number);
         this.props.getFollowedUsersThunkCreator(this.props.friend)
     }
-
 // в componentDidMount() можно делать side effects (ajax запросы, setTimeOut, обращение к дом элементам напрямую)
     componentDidMount(){
         this.refresh();
     }
-    componentDidUpdate(prevProps:propsType, prevState:any, snapshot:any) {//используем обязательно с условием, чтоб не зациклить
+    componentDidUpdate(prevProps:propsType, prevState:propsType) {//используем обязательно с условием, чтоб не зациклить
         if(this.props.match.params.userId !== prevProps.match.params.userId){
             this.refresh();
         }
     }
-
     render() {
        return(
            <Profile {...this.props}
@@ -86,10 +80,11 @@ let mapStateToProps = (state:AppStateType):mapStatePropsType  =>({
     usersFollowed: state.usersPage.usersFollowed,
     friend: state.usersPage.friend
 });
+
 export  default compose(
-    connect<mapStatePropsType, mapDicpatchPropeType, ownPropsType, AppStateType>(mapStateToProps,{getFollowedUsersThunkCreator, getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
+    connect<mapStatePropsType, mapDicpatchPropeType, RouteComponentProps<PathParamsType>, AppStateType>(mapStateToProps,{getFollowedUsersThunkCreator, getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, updateProfilePhotoThunkCreator, saveProfileThunkCreator}),
     withRouter
-)(ProfileAPI);
+)(ProfileAPI)as React.ComponentType;
 
 //let AuthRedirectComponent = WithAuthRedirect(ProfileAPI);
 //withRouter - компонента высшего порядка, в нее через пропсы придут данные о маршруте (url) в котором мы находимся
