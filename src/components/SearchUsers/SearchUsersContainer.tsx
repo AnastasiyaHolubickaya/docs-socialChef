@@ -1,25 +1,23 @@
 
 import {connect} from "react-redux";
-import {getUsersSearchThunkCreator} from "../../redux/usersReducer";
-import SearchUsers from "./SearchUsers";
+
 import {AppStateType} from "../../redux/store";
 import {usersType} from "../../redux/types/types";
+import SearchUsers from "./SearchUsers";
 
 type mapStatePropsType={
     users: Array<usersType>
 }
 type mapDispatchPropsType={
-    getUsersSearchThunkCreator: (name:string)=>void
+
 }
 type ownProps={}
-let mapStateToProps = (state:AppStateType):mapStatePropsType => {
-    return {
-        users: state.usersPage.searchUsersForName
-    }
+let mapStateToProps = (state:AppStateType) => {
+
 };
 
 
-const SearchUsersContainer = connect <mapStatePropsType, mapDispatchPropsType,ownProps,AppStateType> (mapStateToProps,{getUsersSearchThunkCreator} )(SearchUsers);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
+const SearchUsersContainer = connect  (mapStateToProps,{} )(SearchUsers);//сoздаем контейнерную компоненту для AddMessage с помощью библиотеки react-redux (connect)
 
 
 

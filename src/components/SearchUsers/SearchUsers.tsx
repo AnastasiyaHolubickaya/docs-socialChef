@@ -1,4 +1,4 @@
-import classes from "../Message/Message.module.css";
+
 import React from "react";
 import Button from "../Button/Button";
 import {Field, reduxForm} from "redux-form";
@@ -8,7 +8,6 @@ import {usersType} from "../../redux/types/types";
 
 type propsType={
     users: Array<usersType>
-    getUsersSearchThunkCreator: (name:string)=>void
 }
 type formPropsType={
     handleSubmit:any
@@ -16,9 +15,9 @@ type formPropsType={
 const SearchUsersForm:React.FC<formPropsType> = ({handleSubmit}) =>{
     return(
         <form onSubmit={handleSubmit}>
-            <div className={classes.search}>
-            <div className={classes.inputSearch}><Field  type="text" name={'searchUsers'} placeholder={'введите имя'} component={Input} /></div>
-            <div className={classes.buttonSearch}> <Button  value="поиск"/></div>
+            <div >
+            <div ><Field  type="text" name={'searchUsers'} placeholder={'введите имя'} component={Input} /></div>
+            <div > <Button  value="поиск"/></div>
             </div>
         </form>
     )
@@ -31,13 +30,13 @@ const SearchUsersReduxForm = reduxForm({//контейнерная компон�
 
 
 
-const SearchUsers:React.FC<propsType> = ({getUsersSearchThunkCreator,users }) =>{
+const SearchUsers:React.FC<propsType> = ({users }) =>{
     const onSubmit = (formData:any) => {// сюда придут данные их формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
-        getUsersSearchThunkCreator(formData.searchUsers);
+
     };
 
 
-    return ( <div className={classes.searchUsers}>
+    return ( <div >
                  <SearchUsersReduxForm onSubmit = {onSubmit}/><br/>
                  <div>
                      <Users massUsers={users}/>

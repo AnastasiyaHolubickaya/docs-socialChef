@@ -3,29 +3,24 @@ import classes from './Login.module.css';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";//инсталируем redux form - npm install redux-form   в store.ts комбайним редаксовский редьюсер
 import {CreateField, getStringKeys, Input} from "../commons/FormControls/FormControls";
 import {maxLengthCreator, requiredField} from "../../utils/validation/validator";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { LoginThunkCreator} from "../../redux/authReducer"
 import {Redirect} from "react-router-dom";
 import Button from "../Button/Button";
 import {AppStateType} from "../../redux/store";
 
-type mapStatePropsType ={
-    captchaUrl?: string|null
-    isAuth: boolean
-}
-type mapDispatchPropsType={
-    LoginThunkCreator:(email:string, password:string, rememberMe:boolean, captchaUrl:string|null)=>void
-}
+
 type ownPropsType={
     captchaUrl?: string|null
 }
-type propsType= mapStatePropsType & mapDispatchPropsType & ownPropsType;
+type propsType=  ownPropsType;
 
 const maxLength30 = maxLengthCreator(30);
 const maxLength10 = maxLengthCreator(20);
 
-const LoginForm:React.FC<InjectedFormProps<formDataType>& ownPropsType> = ({handleSubmit,error, captchaUrl }) =>{
-//handleSubmit - колбек функция, приходящая в пропсы LoginForm из reduxForm,
+const LoginForm:React.FC<InjectedFormProps<formDataType>& ownPropsType> = ({handleSubmit,error,captchaUrl}) =>{
+
+    //handleSubmit - колбек функция, приходящая в пропсы LoginForm из reduxForm,
 // вешаем ее на событие onSubmit
 //  в ней происходят:
 //  e.preventDefault,
@@ -69,15 +64,21 @@ type formDataType={
     email: string
 }
 type formDataKeysProps= getStringKeys <formDataType>// получаем объект ключей ( Extract - означает берем только (в нашем случае) string):  captchaUrl,rememberMe,password,email. (урок 8 (2), время 1.08.58))
-const Login:React.FC<propsType> = ({isAuth, captchaUrl, LoginThunkCreator}) =>{
+
+export const Login:React.FC<propsType> = () =>{
+
+    const  captchaUrl = useSelector((state:AppStateType) => state.auth.captchaUrl);
+    const isAuth = useSelector((state:AppStateType) => state.auth.isAuth);
+    const dispatch = useDispatch();
+
+
     const onSubmit = (formData:formDataType) => {// сюда придут данные из формы, передаем эту  функцию в LoginReduxForm чтоб получить эти данные из формы
         //console.log(formData);
-        LoginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captchaUrl )//отправляем взятые из формы данные на сервер
+        dispatch (LoginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captchaUrl ))//отправляем взятые из формы данные на сервер
     };
     if(isAuth){
         return  <Redirect to = {`/profile`}/>
     }
-
     return(
         <div className={classes.wrapperBlockForm}>
             <div className={classes.blockForm}>
@@ -91,14 +92,9 @@ const Login:React.FC<propsType> = ({isAuth, captchaUrl, LoginThunkCreator}) =>{
 
     )
 };
-const mapStateToProps =  (state:AppStateType):mapStatePropsType => ({
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl
-});
 
-export  default connect <mapStatePropsType, mapDispatchPropsType, ownPropsType, AppStateType> (
-    mapStateToProps,
-    {LoginThunkCreator}) (Login);
+
+
 
 //рисуем форму с исполтзованием собственной функции CreateField
 // LoginForm...

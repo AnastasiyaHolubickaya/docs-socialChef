@@ -6,17 +6,17 @@ import Header from "./components/header/header";
 import ProfileAPI from "./components/profile/profileAPI";
 import HomeApi from "./components/Home/HomeApi";
 import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
 import {Route,  withRouter} from "react-router-dom";
-import AllUsersAPI from "./components/AllUsers/AllUsersAPI";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {InitializationThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/Preloader/Preloader";
 import {WithSuspense} from "./hoc/WithSuspense";
 import {AppStateType} from "./redux/store";
-// hook
+import { AllUsers } from './components/AllUsers/AllUsers';
+import {Login} from "./components/Login/Login";
 
+// hook
 const MessageApi = React.lazy(() => import('./components/Message/MessageApi'));
 
 type mapStatePropsType= ReturnType<typeof mapStateToProps>
@@ -55,7 +55,7 @@ class App extends Component<mapDispatchPropsType& mapStatePropsType> {// дел�
                         <Route path='/register' render={() => <Register/>}/>
                         <Route path='/profile/:userId?' render={() => <ProfileAPI/>}/>
                         <Route path='/login' render={() => <Login/>}/>
-                        <Route path='/users' render={() => <AllUsersAPI/>}/>
+                        <Route path='/users' render={() => <AllUsers/>}/>
                         <Route exact path='/' render={() => <HomeApi/>}/>
                 </div>
             </div>

@@ -1,85 +1,19 @@
 import React from "react";
-import AllUsers from "./AllUsers";
-import {connect} from "react-redux";
-
-import {
-     followThunkCreator, getUsersThunkCreator,
-    unFollowThunkCreator
-} from "../../redux/usersReducer";
-import {
-    getCurrentPage,
-    getIsFetching,
-    getIsFollowingProgress,
-    getPageSize,
-    getUsers,
-    getUsersCount
-} from "../../redux/usersSelectors";
-import {usersType} from "../../redux/types/types";
-import {AppStateType} from "../../redux/store";
+import {AllUsers} from "./AllUsers";
 
 
-type MapStatePropsType ={
-    currentPage:number
-    pageSize:number
-    users:Array<usersType>
-    isFetching:boolean
-    usersCount:number
-    isFollowingProgress: Array<number>
-}
-type MapDispatchPropsType ={
-    getUsersThunkCreator:(currentPage:number,pageSize:number) => void
-    //setCurrentPage:(pageNumber:number) => void
-    unFollowThunkCreator:(id:number) => void
-    followThunkCreator:(id:number) => void
-}
+
 type OwnProps={}
 
-type PropsType= MapStatePropsType & MapDispatchPropsType & OwnProps;
 
-class AllUsersAPI extends  React.Component<PropsType>{
-        componentDidMount(){
-            const {currentPage, pageSize}= this.props;
-             this.props.getUsersThunkCreator(currentPage,pageSize );
-        }
-        onPageChange = (pageNumber:number) =>{
-            const {pageSize} = this.props;
-           // this.props.getCurrentPage(pageNumber);
-            this.props.getUsersThunkCreator(pageNumber,pageSize );
-        };
+const AllUsersPage:React.FC<OwnProps> = (props)=>{
 
-    render() {
-       return <>
-            <AllUsers
-               userCount = {this.props.usersCount}
-                pageSize = {this.props.pageSize}
-               currentPage = {this.props.currentPage}
-               onPageChange = {this.onPageChange}
-               users = {this.props.users}
-               isFetching = {this.props.isFetching}
-               isFollowingProgress = {this.props.isFollowingProgress}
-               followThunkCreator = {this.props.followThunkCreator}
-               unFollowThunkCreator = {this.props.unFollowThunkCreator}
-
-           />
-       </>
-    }
-}
-
-let mapStateToProps = (state:AppStateType):MapStatePropsType => {
-    return{
-        users: getUsers(state),// getUsersReselect(state)
-        pageSize: getPageSize(state),
-        usersCount: getUsersCount(state),
-        currentPage: getCurrentPage(state),
-        isFetching: getIsFetching(state),
-        isFollowingProgress: getIsFollowingProgress(state)
-    }
+    return <>
+        <AllUsers />
+    </>
 };
 
-export default connect <MapStatePropsType, MapDispatchPropsType, OwnProps, AppStateType> (
-    mapStateToProps,
-    {
-        getUsersThunkCreator, followThunkCreator, unFollowThunkCreator}) (AllUsersAPI);
+export default AllUsersPage
 
 /*
 const AllUsers = (props) =>{

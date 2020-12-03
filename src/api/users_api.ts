@@ -8,14 +8,8 @@ import {usersType} from "../redux/types/types";
 }
 
 export const usersApi = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<getUsersType>(`users?page=${currentPage}&count=${pageSize}`)
-            .then(res => {
-                return res.data
-            })
-    },
-    getUsersForName(name: string) {
-        return instance.get<getUsersType>(`users?term=${name}`)
+    getUsers(currentPage: number, pageSize: number, name:string, friend:null | boolean = null) {
+        return instance.get<getUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${name}` + (friend===null?'':`&friend=${friend}`))
             .then(res => {
                 return res.data
             })

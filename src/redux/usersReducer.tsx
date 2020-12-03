@@ -21,8 +21,11 @@ type ActionsType= InferActionType<typeof  actions>;
 
 let initialState = {
     users:[] as Array<usersType>,
-    searchUsersForName:[]as Array<usersType>,
     usersFollowed:[] as Array<usersType>,
+    filter:{
+        name:'',
+        friend: undefined as undefined | boolean
+    },
     pageSize: 5,
     usersCount: 0,
     currentPage: 1,
@@ -30,6 +33,7 @@ let initialState = {
     isFetching: false,//  приставка is для названия переменных с булевым значением: true/false
     isFollowingProgress: [] as Array<number>//массив id пользователей
 };
+export type filterType  = typeof initialState.filter;
 export type initialState  = typeof initialState;
 
 const usersReducer =  (state = initialState, action:ActionsType):initialState=> {
@@ -50,11 +54,7 @@ const usersReducer =  (state = initialState, action:ActionsType):initialState=> 
                 ...state,
                 users: action.users
                 };
-        case "SET_SEARCH_USERS_FOR_NAME":
-            return {
-                ...state,
-                searchUsersForName: action.users
-            };
+
         case "SET_FOLLOWED_USERS":
             return {
                 ...state,
@@ -82,6 +82,10 @@ const usersReducer =  (state = initialState, action:ActionsType):initialState=> 
                     ? [...state.isFollowingProgress, action.userId]
                     : state.isFollowingProgress.filter(id => id !== action.userId)
             };
+        case "SET_FILTER_FOR_NAME":
+            return {
+                ...state,  filter: action.payload
+            };
         default:
             return state;
     }
@@ -97,8 +101,7 @@ export const actions={
      setUsersCount: (usersCount:number) => ({type: "SET_USERS_COUNT", usersCount}as const),
      setToggleIsFetching: (isFetching:boolean) =>({type: "TOGGLE_IS_FETCHING", isFetching}as const),
       setToggleIsFollowing: (isFollowingProgress:boolean, userId:number) => ({type: "TOGGLE_IS_FOLLOWING", isFollowingProgress, userId}as const),
-     setSearchUsers: (users:Array<usersType>) => ({type: "SET_SEARCH_USERS_FOR_NAME", users}as const),
-
+     setFilter:(filter:filterType) => ({type: "SET_FILTER_FOR_NAME", payload: filter} as const)
 };
 
 //делаем thunc - функция котоая диспатчит action creaters если санке нужны какие-то данные, оборачиваем ее
@@ -108,18 +111,18 @@ type thuncType = BaseThuncType<ActionsType>
 type dispatchType= Dispatch<ActionsType>
 
 export  const  getUsersThunkCreator = (currentPage:number,
-                                       pageSize:number): thuncType => async (dispatch) => {
+                                       pageSize:number, filter:filterType): thuncType => async (dispatch) => {
     dispatch(actions.setToggleIsFetching(true));
     dispatch(actions.setCurrentPage(currentPage));
-   let data= await usersApi.getUsers(currentPage, pageSize);
+    dispatch(actions.setFilter(filter));
+
+   let data= await usersApi.getUsers(currentPage, pageSize, filter.name, filter.friend);
+    console.log(data);
        dispatch(actions.setToggleIsFetching(false));
        dispatch(actions.setUsers(data.items));
        dispatch(actions.setUsersCount(data.totalCount));
 };
-export  const  getUsersSearchThunkCreator = (name:string):thuncType => async (dispatch) => {
-    let data= await usersApi.getUsersForName(name);
-            dispatch(actions.setSearchUsers(data.items));
-    };
+
 export  const  getFollowedUsersThunkCreator = (friend:boolean):thuncType => async (dispatch) => {
     let data= await usersApi.getFollowedUsers(friend);
             dispatch(actions.setFollowedUsers(data.items));

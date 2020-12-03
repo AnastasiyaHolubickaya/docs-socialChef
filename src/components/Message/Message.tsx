@@ -1,8 +1,8 @@
 import React from "react";
 import classes from './Message.module.css';
 import AddMessage from "./AddMessage/AddMessage";
-import SearchUsersContainer from "../SearchUsers/SearchUsersContainer";
 import {dataUsersType, profileType} from "../../redux/types/types";
+
 
 type propsType={
     dataDialogs: Array<dataUsersType>
@@ -26,7 +26,7 @@ const Message:React.FC<propsType> = ({dataDialogs,login,userId,profile,addMessAc
     return(
         <div className={classes.dialogs}>
             <h1>Чат</h1>
-            <SearchUsersContainer/>
+
             <Counter/>
 
             <AddMessage

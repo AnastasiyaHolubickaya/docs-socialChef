@@ -19,6 +19,9 @@ export  const getUsers = (state:AppStateType) => {
   export  const getIsFollowingProgress = (state:AppStateType) => {
       return state.usersPage.isFollowingProgress;
   };
+export  const getUsersFilter = (state:AppStateType) => {
+    return state.usersPage.filter;
+};
 
 
 

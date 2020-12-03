@@ -1,24 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from './AllUsers.module.css';
 import Preloader from "../Preloader/Preloader";
 import Pagination from "./Pagination";
 import OneUser from "./OneUser";
-import SearchUsersContainer from "../SearchUsers/SearchUsersContainer";
-import {usersType} from "../../redux/types/types";
+import SearchFormik from "../Formik/SearchFormik/SearchFormik";
+import {filterType, followThunkCreator, getUsersThunkCreator, unFollowThunkCreator} from "../../redux/usersReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getIsFetching, getIsFollowingProgress,
+    getPageSize,
+    getUsers,
+    getUsersCount,
+    getUsersFilter
+} from "../../redux/usersSelectors";
 
 type counterPropsType={
     userCount:number
 }
 type propsType ={
-    userCount:number
-    pageSize:number
-    onPageChange:(pageNumber:number)=>void
-    currentPage: number
-    isFetching:boolean
-    users:Array <usersType>
-    isFollowingProgress:Array<number>
-    unFollowThunkCreator:(id:number) => void
-    followThunkCreator:(id:number) => void
+
 }
 
 let Counter:React.FC<counterPropsType> = ({userCount}) =>{
@@ -28,11 +29,44 @@ let Counter:React.FC<counterPropsType> = ({userCount}) =>{
     </div>)
 };
 
-const AllUsers:React.FC<propsType> = ({userCount,pageSize,onPageChange,currentPage,isFetching, users,  isFollowingProgress,unFollowThunkCreator, followThunkCreator }) =>{
+export const AllUsers:React.FC<propsType> = () =>{
+    useEffect(()=>{
+        dispatch(getUsersThunkCreator(currentPage,pageSize,filter ));
+        },[]);// пустая зависимость означает сделать что-то когда компонента вмонтировалась ( componentDidMount())
+
+
+// hook useSelector принимает selectors (фукции достающие из state данные)
+    const users = useSelector(getUsers);
+    const isFollowingProgress = useSelector(getIsFollowingProgress);
+    const  userCount = useSelector(getUsersCount);
+    const  currentPage = useSelector(getCurrentPage);
+    const pageSize = useSelector(getPageSize);
+    const filter = useSelector(getUsersFilter);
+    const isFetching = useSelector(getIsFetching);
+    const dispatch = useDispatch();
+
+    const onPageChange = (pageNumber:number) =>{
+        //const {pageSize, filter} = this.props;
+        // this.props.getCurrentPage(pageNumber);
+        dispatch(getUsersThunkCreator(pageNumber,pageSize,filter));
+    };
+    const onFilterChange = (filter:filterType) => {
+        dispatch (getUsersThunkCreator(1,pageSize,filter));
+        console.log(filter.name)
+    };
+    const follow = (id:number)=>{
+        dispatch(followThunkCreator(id));
+    };
+    const unFollow = (id:number)=>{
+        dispatch(unFollowThunkCreator(id));
+    };
+
     return(
         <div className={classes.usersPage}>
-            <SearchUsersContainer/>
+            <div> <h2>Все зарегистрированные пользователи</h2></div>
             <Counter userCount = {userCount}/>
+            <SearchFormik search={onFilterChange}
+            />
             <Pagination
                 userCount = {userCount}
                 pageSize = {pageSize}
@@ -43,8 +77,8 @@ const AllUsers:React.FC<propsType> = ({userCount,pageSize,onPageChange,currentPa
             <OneUser
                  users = {users}
                  isFollowingProgress = {isFollowingProgress}
-                 unFollowThunkCreator = {unFollowThunkCreator}
-                 followThunkCreator = {followThunkCreator}
+                 unFollowThunkCreator = {unFollow}
+                 followThunkCreator = {follow}
             />
             <Pagination
                 userCount = {userCount}
@@ -55,4 +89,3 @@ const AllUsers:React.FC<propsType> = ({userCount,pageSize,onPageChange,currentPa
         </div>
     )
 };
-export  default AllUsers;

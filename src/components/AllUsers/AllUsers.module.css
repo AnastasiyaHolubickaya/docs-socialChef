@@ -15,6 +15,10 @@
     padding: 50px;
     margin: 0 auto;
     text-align: center;
+
+}
+.usersPage h2{
+    color: white;
 }
 .dialogs:after {
     content: "."; /* добавить содержимое: "." */
